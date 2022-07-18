@@ -1,24 +1,24 @@
-Welcome to Lumache's documentation!
+欢迎访问 AbsBox 手册!
 ===================================
 
-**Lumache** (/lu'make/) is a Python library for cooks and food lovers
-that creates recipes mixing random ingredients.
-It pulls data from the `Open Food Facts database <https://world.openfoodfacts.org/>`_
-and offers a *simple* and *intuitive* API.
+**AbsBox** 是一个基于Python用于ABS/MBS现金流建模以及分析的工具包。
+通过字典化的描述型建模，对ABS/MBS的要素进行建模，通过高性能的引擎计算，输出现金流和分析指标。
 
-Check out the :doc:`usage` section for further information, including
-how to :ref:`installation` the project.
+适合分析师进行产品投资收益分析，或者发行产品设计（资产池筛选，结构设计，债券定价）等功能。 
+
+结合RESTful服务可以与其他内部系统进行集成。
 
 .. note::
 
-   This project is under active development.
+   项目持续开发中.
 
-Contents
+目录
 --------
 
 .. toctree::
 
-   usage
-   api
+   安装
+   建模
+   分析
 
-asset-backed.org
+

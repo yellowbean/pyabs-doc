@@ -2,11 +2,11 @@
 
 # -- Project information
 
-project = 'Lumache'
-copyright = '2021, Graziella'
-author = 'Graziella'
+project = 'AbsBox'
+copyright = '2022, Xiaoyu,Zhang'
+author = 'xiaoyu, zhang'
 
-release = '0.1'
+release = '0.1.1.3'
 version = '0.1.0'
 
 # -- General configuration
@@ -17,6 +17,7 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
+    'myst_parser'
 ]
 
 intersphinx_mapping = {

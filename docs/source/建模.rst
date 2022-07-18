@@ -1,19 +1,27 @@
-Usage
+建模
 =====
 
-.. _installation:
+建模的过程是把事实性的数据(比如债券信息，资产池，分配规则等)，传入到自带的类进行实例化的过程。
 
-Installation
+目前absbox支持 信贷ABS, 交易所ABS 两类。
+
+.. _信贷ABS:
+
+信贷ABS
 ------------
 
 To use Lumache, first install it using pip:
 
-.. code-block:: console
+.. code-block:: python
 
-   (.venv) $ pip install lumache
+   from absbox.local.china import 信贷ABS
 
-Creating recipes
+交易所ABS
 ----------------
+
+.. code-block:: python
+
+   from absbox.local.china import 交易所ABS
 
 To retrieve a list of random ingredients,
 you can use the ``lumache.get_random_ingredients()`` function:
