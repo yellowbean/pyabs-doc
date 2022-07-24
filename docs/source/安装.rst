@@ -9,11 +9,11 @@
 .. autosummary::
    :toctree: generated
 
-通过`pip`进行安装, **`absbox`因为用到了match语句，仅支持Python3.10**
+通过`pip`进行安装, **`absbox`因为用到了python 的 match语句，仅支持Python3.10**
 
 .. code-block:: console
 
     pip install absbox
 
 依赖：
-`absbox` 内部分别使用 pandas requests 进行数据的处理和远程服务器调用。
+`absbox` 内部使用 `pandas` `requests` 进行数据的处理和远程服务器调用。
