@@ -1,11 +1,6 @@
 安装
 ====
 
-
-安装
------
-
-
 .. autosummary::
    :toctree: generated
 

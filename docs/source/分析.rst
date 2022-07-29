@@ -114,23 +114,43 @@
 
 * ``result['pool']['flow']``
 
+.. image:: img/pool_flow.png
+  :width: 400
+  :alt: 资产池现金流
+
 费用现金流
 ^^^^
 
 * ``result['fees']``
 
+.. image:: img/fee_flow2.png
+  :width: 400
+  :alt: 费用
+
 账户流水
 ^^^^
 
 * ``result['accounts']['本金分账户']`` 获取``本金分账户``的现金流
+
+.. image:: img/acc_flow.png
+  :width: 400
+  :alt: 账户
+
 * ``result['accounts']['本金分账户'].loc[['2021-11-26']]`` ，获取 ``2021-11-26`` 日所有该账户收支明细
 
+.. image:: img/acc_day.png
+  :width: 400
+  :alt: 账户2
 
 债券现金流
 ^^^^
 
 * ``result['bonds']`` 即可获取所有债券现金流
 * ``result['bonds']['A1']`` 即可获取债券 ``A1`` 债券的现金流
+
+.. image:: img/bond_flow.png
+  :width: 400
+  :alt: 债券现金流
 
 整体概览
 ^^^^
@@ -148,6 +168,11 @@
 .. code-block:: python
 
   result['pricing']
+
+
+.. image:: img/pricing.png
+  :width: 400
+  :alt: 估值
 
 保存为HTML
 ^^^^
