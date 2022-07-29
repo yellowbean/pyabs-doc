@@ -367,7 +367,7 @@
 
 建模文件保存/读取
 ----------------
-建议通过``orjson``包对建模文件进行存储。
+建议通过python自带的``pickle``包对建模文件进行存储。
 
 保存
 ^^^^
@@ -378,7 +378,7 @@
   ...
   deal = .... #
 
-  orjson.dump(open("path/to/file",'w'),deal)
+  save(deal,"path/to/file")
 
 读取
 ^^^^
@@ -388,7 +388,4 @@
 
   ...
 
-  orjson.load(open("path/to/file",'r'))
-
-  api.run(deal,....)
-
+  信贷ABS.load("path/to/file")
