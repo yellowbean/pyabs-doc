@@ -6,7 +6,8 @@
 
 .. code-block:: python
 
-   from absbox import API
+   from absbox import API,save
+   from absbox.local.china import 信贷ABS,show
    localAPI = API("https://deal-bench.xyz")
 
 
@@ -26,6 +27,20 @@
                pricing={"贴现日":"2023-06-22","贴现曲线":[["2020-01-01",0.025]]},
                read=True
               )
+
+如果 模型文件已经通过下列命令存储至本地目录
+
+.. code-block:: python
+
+    save(jy, "test02.obj")
+
+那么 通过传入指定本地文件路径运行分析
+
+.. code-block:: python
+
+    localAPI.run("test02.obj"
+            ,assumptions=[{"CPR":0.01},{"CDR":0.01},{"回收":(0.7,18)}]
+            ,read=True)
 
 参数
 -----
