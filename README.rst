@@ -8,6 +8,4 @@ This repo serves document for Python `AbsBox` package .
 
 * https://github.com/yellowbean/Hastructure
 * https://github.com/yellowbean/pyabs
-
-* 中文手册 Chinese
-  *  https://pyabs-doc.readthedocs-hosted.com/zh/latest/index.html
+* [中文手册 Chinese](https://pyabs-doc.readthedocs-hosted.com/zh/latest/index.html)
