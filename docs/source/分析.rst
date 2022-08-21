@@ -8,10 +8,10 @@
 
    from absbox import API,save
    from absbox.local.china import 信贷ABS,show
-   localAPI = API("https://deal-bench.xyz")
+   localAPI = API("https://deal-bench.xyz/api")
 
 
-``"https://deal-bench.xyz"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。
+``"https://deal-bench.xyz/api"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。
 
 .. note::
    计算服务器是基于REST Service 引擎,`absbox`通过HTTP协议和这个引擎进行交互。
@@ -22,11 +22,19 @@
 
 .. code-block:: python
 
-  localAPI.run(jy,
-               assumptions=[{"CPR":0.01},{"CDR":0.01},{"回收":(0.7,18)}],
-               pricing={"贴现日":"2023-06-22","贴现曲线":[["2020-01-01",0.025]]},
+  localAPI.run(jy,    # 这里 jy 就表示一个ABS产品模型
+               assumptions=[{"CPR":0.01}  # 年化早偿付率 1%
+                           ,{"CDR":0.01}  # 年化违约率  1%
+                           ,{"回收":(0.7,18)}],  # 回收率 70%，回收周期 18
+               pricing={"贴现日":"2023-06-22"
+                       ,"贴现曲线":[["2020-01-01",0.025]]},
                read=True
               )
+
+持仓现金流
+^^^^
+如果用户希望获得自己持仓的现金流回款，可以通过position参数进行传递持仓信息。在返回结果中通过 `position` 获取持仓现金流。
+
 
 如果 模型文件已经通过下列命令存储至本地目录
 
@@ -100,6 +108,11 @@
 .. code-block:: python
 
   {"贴现日":"2023-06-22","贴现曲线":[["2020-01-01",0.03]]}
+
+3.2 贴现日
+""""
+
+将贴现日之后的债券现金流，贴现至贴现日
 
 4. read
 ^^^^^
@@ -183,6 +196,33 @@
 .. image:: img/pricing.png
   :width: 400
   :alt: 估值
+
+债券持仓现金流
+^^^^
+
+用户可以通过参数 `position` 传入持仓债券的张数和对应层级，从而获取对应债券实际获得的现金流
+
+.. code-block:: python
+
+  r = localAPI.run(BYD_AUTO_2021_2
+             ,assumptions= myAssumption
+             ,pricing= myPricing
+             ,read=True
+             ,position={"次级":2000}
+             )
+
+通过加入一个`position`参数，传入当前持仓的名称，持仓的债券张数
+
+.. code-block:: python
+
+  r['position']['次级']
+
+即可获取基于持仓的现金流
+
+.. image:: img/position_bond_flow.png
+  :width: 500
+  :alt: 持仓现金流
+
 
 保存为HTML
 ^^^^
