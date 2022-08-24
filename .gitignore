@@ -154,3 +154,11 @@ dmypy.json
 cython_debug/
 
 # End of https://www.toptal.com/developers/gitignore/api/python,jupyternotebooks
+.idea/aws.xml
+.idea/ClojureProjectResolveSettings.xml
+.idea/git_toolbox_prj.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/pyabs-doc.iml
+.idea/vcs.xml
+.vscode/settings.json
