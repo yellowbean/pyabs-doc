@@ -232,6 +232,19 @@
 
   show(result)
 
+保存为HTML
+----
+
+通过使用 ``float_format`` 参数
+
+* ``lambda x: '{:,.2f}'.format(x)`` 对 大金额数字进行逗号分割。
+* ``str`` -> 普通数字显示（非默认的科学计数法）
+
+.. code-block:: python
+
+    show(result).to_html(r"path/result.html",float_format=lambda x: '{:,.2f}'.format(x))
+
+
 债券估值/久期/WAL/应计利息
 ----
 
@@ -246,17 +259,5 @@
   :width: 400
   :alt: 估值
 
-
-保存为HTML
-----
-
-通过使用 ``float_format`` 参数
-
-* ``lambda x: '{:,.2f}'.format(x)`` 对 大金额数字进行逗号分割。
-* ``str`` -> 普通数字显示（非默认的科学技术法）
-
-.. code-block:: python
-
-    show(result).to_html(r"path/result.html",float_format=lambda x: '{:,.2f}'.format(x))
 
 
