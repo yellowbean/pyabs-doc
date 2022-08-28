@@ -4,7 +4,7 @@
 Issue
 -----
 
-Bug或者功能建议，请访问
+如果遇到Bug或者功能建议，请访问
 
 https://github.com/yellowbean/AbsBox/issues
 
@@ -15,3 +15,4 @@ Email
 .. image:: img/email-image.png
   :width: 200
   :alt: Support Email 
+
