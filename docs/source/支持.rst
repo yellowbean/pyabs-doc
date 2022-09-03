@@ -10,9 +10,10 @@ https://github.com/yellowbean/AbsBox/issues
 
 如果需要咨询 **AbsBox** 的使用方法,提供线上线下培训。
 
-API
+API 集成
 ----
-提供API与金融机构存量系统进行集成，支持 White-Label。
+- 提供API与金融机构存量系统进行集成，
+- 支持 White-Label 嵌入
 
 
 Email
