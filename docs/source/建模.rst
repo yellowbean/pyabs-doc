@@ -250,6 +250,9 @@
 简单优先/劣后结构
 ----
 
+  * 简单 优先劣后结构 
+  * 固定费用 （一次性产生等待付清），例如承销费用
+  
 .. literalinclude:: deal_sample/test01.py
    :language: python
    :linenos:
