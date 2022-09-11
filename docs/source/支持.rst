@@ -4,7 +4,7 @@
 Issue
 -----
 
-如果遇到Bug或者功能建议，请访问
+如果遇到 **Bug** 或者 **功能/文档建议**，请访问
 
 https://github.com/yellowbean/AbsBox/issues
 
@@ -12,8 +12,8 @@ https://github.com/yellowbean/AbsBox/issues
 
 API 集成
 ----
-- 提供API与金融机构存量系统进行集成，
-- 支持 White-Label 嵌入
+- 提供REST API与金融机构现有系统进行集成
+- Docker
 
 
 Email
