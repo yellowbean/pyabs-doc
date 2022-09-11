@@ -11,7 +11,11 @@
 
 .. note::
 
-   项目持续开发中.如果有问题欢迎联系 
+   项目持续开发中.如果有问题欢迎联系
+   
+   .. image:: img/email-image.png
+     :width: 200
+     :alt: Support Email 
 
 目录
 --------
