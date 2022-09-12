@@ -256,6 +256,7 @@
 .. literalinclude:: deal_sample/test01.py
    :language: python
    :linenos:
+   :emphasize-lines: 28
 
 附带固定摊还的债券建模
 ----

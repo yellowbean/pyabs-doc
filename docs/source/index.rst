@@ -1,6 +1,11 @@
 欢迎访问 AbsBox 手册!
 ===================================
 
+.. image:: https://badge.fury.io/py/absbox.svg
+    :target: https://badge.fury.io/py/absbox
+
+.. image:: https://img.shields.io/pypi/dm/absbox
+
 **AbsBox** 是用于ABS/MBS现金流建模和分析的Python工具包。
 
 通过结构化的描述方式，对ABS/MBS的要素进行建模，经过高性能的计算引擎，输出现金流和分析指标。
