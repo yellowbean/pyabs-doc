@@ -331,6 +331,15 @@
    :linenos:
    :emphasize-lines: 59-66
 
+基于条件的分配执行
+----
+在分配动作中，当我们把 `[<分配动作>]` 改成 `[[<分配条件>],[<分配动作>]]` 之后，
+只有 `[<分配条件>]` 满足的情况下，才会执行后面的分配动作
+
+.. literalinclude:: deal_sample/test09.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 35-38
 
 
 建模文件保存/读取
