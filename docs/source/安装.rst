@@ -1,17 +1,32 @@
 安装
 ====
 
+.. warning::
+  `absbox` 因为用到了python 的 match语句，仅支持Python3.10
+
 .. autosummary::
    :toctree: generated
 
-通过`pip`进行安装, **`absbox`因为用到了python 的 match语句，仅支持Python3.10**
+pip
+----
+通过`pip`进行安装, 
 
 .. code-block:: console
 
     pip install absbox
 
+
+github
+----
+新功能会在github中更早部署
+
+.. code-block:: console
+
+    pip install -U git+https://github.com/yellowbean/AbsBox.git@main
+
+
 版本升级
-^^^^
+----
 
 .. code-block:: console
 
@@ -19,7 +34,7 @@
 
 
 版本确认
-^^^^
+----
 
 .. code-block:: console 
 
