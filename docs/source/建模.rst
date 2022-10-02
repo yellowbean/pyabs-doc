@@ -434,6 +434,19 @@
    :linenos:
    :emphasize-lines: 42-45,3
 
+计息账户 
+----
+用户可以设定账户的结算利息情况，
+
+* 用于模拟现实银行的活期利息计算  
+* 用于模拟投资账户的再投资
+
+.. literalinclude:: deal_sample/test11.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 12
+
+
 
 
 建模文件保存/读取
