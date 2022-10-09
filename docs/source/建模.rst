@@ -32,18 +32,9 @@
 
 .. code-block:: python
 
-  {"封包日":"2022-01-01", "起息日": "2022-03-01","首次兑付日":"2022-05-01"}:
-  # 表示 封包日=2022-01-01,起息日=2022-03-01,首次支付日=2022-05-01
-
-  {"收款期末日":"2022-01-01","计息期末日":  "2022-03-01","下次兑付日":"2022-05-01"}
-  # 表示 封包日=2022-01-01,起息日=2022-03-01,首次支付日=2022-05-01
-  
-  ("2022-01-01","2022-03-01","2022-05-01")
-  # 表示 2022-01-01 之后资产池现金流用于分配 
-  # 表示  债券起息日为 2022-03-01
-  # 表示 下次分配日期为 2022-05-01
-
-
+  {"封包日":"2021-03-01","起息日":"2021-05-01","首次兑付日":"2021-06-26"
+   ,"法定到期日":"2060-12-01","收款频率":"月末","付款频率":["每月",26]} 
+ 
 对于存量产品建模时,受托报告获取的日期是： 
   * 收款期间（2022-08-01,2022-09-01）
   * 债券当期兑付日 ： 2022-09-26
@@ -334,7 +325,7 @@
 .. literalinclude:: deal_sample/test01.py
    :language: python
    :linenos:
-   :emphasize-lines: 28
+   :emphasize-lines: 29-34
 
 附带固定摊还的债券建模
 ----
@@ -352,7 +343,7 @@
 .. literalinclude:: deal_sample/test03.py
    :language: python
    :linenos:
-   :emphasize-lines: 40-42
+   :emphasize-lines: 40-41
 
 
 某建元(债券浮动利率)
@@ -361,7 +352,7 @@
 .. literalinclude:: deal_sample/test04.py
    :language: python
    :linenos:
-   :emphasize-lines: 22,30,38
+   :emphasize-lines: 23,31,39
 
 
 某工元(期间收益债券)
@@ -370,7 +361,7 @@
 .. literalinclude:: deal_sample/test05.py
    :language: python
    :linenos:
-   :emphasize-lines: 43,54
+   :emphasize-lines: 42,53
 
 某存量建元(带清仓回购) 
 ---- 
@@ -407,7 +398,7 @@
 .. literalinclude:: deal_sample/test08.py
    :language: python
    :linenos:
-   :emphasize-lines: 59-66
+   :emphasize-lines: 58-65
 
 基于条件的分配执行
 ----
@@ -417,7 +408,7 @@
 .. literalinclude:: deal_sample/test09.py
    :language: python
    :linenos:
-   :emphasize-lines: 35-38
+   :emphasize-lines: 35-37
 
 自定义收款日/分配日 
 ----
