@@ -430,7 +430,18 @@
      :linenos:
 
 
-|  
+ABCD公式转移
+----
+
+ABCD 是在中国信贷市场常见的账户转移公式。
+`absbox` 自带强大的公式定义功能，请参见（30-39），用户可以利用各项变量组合成公式。
+
+.. literalinclude:: deal_sample/test13.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 30-39,42
+
+  
 
 
 建模文件保存/读取
