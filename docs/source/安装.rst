@@ -9,7 +9,7 @@
 
 pip
 ----
-通过`pip`进行安装稳定版本
+通过`pip`进行安装稳定版本。
 
 .. code-block:: console
 
@@ -18,7 +18,7 @@ pip
 
 github
 ----
-github版本会包括新功能以及更早的bug修复。
+github版本会包括新功能以及更早的bug修复。本文档所有案例都经过Github版本的测试。
 
 .. code-block:: console
 
