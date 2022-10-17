@@ -311,7 +311,11 @@
   :width: 450
   :alt: BS
 
+如果不传入日期，那么默认为 ``债券的付款日`` 。
 
+.. image:: img/bs_view_default.png 
+  :width: 450
+  :alt: BS
 
 保存为HTML
 ----
