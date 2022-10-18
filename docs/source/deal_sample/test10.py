@@ -1,3 +1,5 @@
+from absbox.local.china import 信贷ABS
+
 test01 = 信贷ABS(
     "Custom Pay Dates"
     ,{"回款日":["2021-04-02","2021-05-26","2021-06-26","2022-01-26"]

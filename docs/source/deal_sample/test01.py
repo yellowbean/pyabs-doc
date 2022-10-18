@@ -1,3 +1,5 @@
+from absbox.local.china import 信贷ABS
+
 test01 = 信贷ABS(
     "Senior/Junior"
     ,{"封包日":"2021-03-31","起息日":"2021-06-15","首次兑付日":"2021-07-26"

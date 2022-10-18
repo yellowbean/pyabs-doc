@@ -1,3 +1,5 @@
+from absbox.local.china import 信贷ABS
+
 # 分润模式
 test03 = 信贷ABS(
     "Split the residual"
