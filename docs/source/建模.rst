@@ -300,7 +300,7 @@
 .. literalinclude:: deal_sample/test01.py
    :language: python
    :linenos:
-   :emphasize-lines: 29-34
+   :emphasize-lines: 31-36
 
 附带固定摊还的债券建模
 ----
@@ -308,7 +308,7 @@
 .. literalinclude:: deal_sample/test02.py
    :language: python
    :linenos:
-   :emphasize-lines: 20-22
+   :emphasize-lines: 22-24
 
 次级分润模式 
 ----
@@ -318,7 +318,7 @@
 .. literalinclude:: deal_sample/test03.py
    :language: python
    :linenos:
-   :emphasize-lines: 40-41
+   :emphasize-lines: 42-43
 
 
 某建元(债券浮动利率)
@@ -327,7 +327,7 @@
 .. literalinclude:: deal_sample/test04.py
    :language: python
    :linenos:
-   :emphasize-lines: 22,30,38
+   :emphasize-lines: 24,32,40
 
 
 某工元(期间收益债券)
@@ -336,7 +336,7 @@
 .. literalinclude:: deal_sample/test05.py
    :language: python
    :linenos:
-   :emphasize-lines: 42,53
+   :emphasize-lines: 44,55
 
 某存量建元(带清仓回购) 
 ---- 
@@ -344,7 +344,7 @@
 .. literalinclude:: deal_sample/test06.py
    :language: python
    :linenos:
-   :emphasize-lines: 74
+   :emphasize-lines: 76
 
 
 盛世融迪2021年第二期个人汽车抵押贷款(现金流归集表建模)
@@ -360,7 +360,7 @@
 .. literalinclude:: deal_sample/test07.py
    :language: python
    :linenos:
-   :emphasize-lines: 6-41
+   :emphasize-lines: 8-43
 
 吉时代2022年第三期个人汽车抵押贷款资产支持证券(流动性储备账户)
 ----
@@ -373,7 +373,7 @@
 .. literalinclude:: deal_sample/test08.py
    :language: python
    :linenos:
-   :emphasize-lines: 58-65
+   :emphasize-lines: 61-67
 
 基于条件的分配执行
 ----
@@ -383,7 +383,7 @@
 .. literalinclude:: deal_sample/test09.py
    :language: python
    :linenos:
-   :emphasize-lines: 35-37
+   :emphasize-lines: 37-39
 
 自定义收款日/分配日 
 ----
@@ -398,7 +398,7 @@
 .. literalinclude:: deal_sample/test10.py
    :language: python
    :linenos:
-   :emphasize-lines: 3-5
+   :emphasize-lines: 5-7
 
 计息账户 
 ----
@@ -410,7 +410,7 @@
 .. literalinclude:: deal_sample/test11.py
    :language: python
    :linenos:
-   :emphasize-lines: 12
+   :emphasize-lines: 14
 
 建元2019年第十一期个人住房抵押贷款资产支持证券 
 ----
@@ -432,7 +432,7 @@ ABCD 是在中国信贷市场常见的账户转移公式。
 .. literalinclude:: deal_sample/test13.py
    :language: python
    :linenos:
-   :emphasize-lines: 30-39,42
+   :emphasize-lines: 32-41,44
 
   
 

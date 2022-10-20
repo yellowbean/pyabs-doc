@@ -142,33 +142,6 @@
   :alt: 持仓现金流
 
 
-2.6 多情景分析 
-^^^^
-如果 ``assumptions`` 传入嵌套列表，那么引擎就会针对嵌套内的每一个情景进行计算。
-此时返回的运算结果是一个 *列表* ，对应每次假设场景的计算结果。
-
-
-.. code-block:: python
-
-    import numpy as np
-    
-    cprs = np.quantile([0.02232,0.03408],[0,0.25,0.75,1])
-    cdrs = np.quantile([0.00119, 0.00239],[0,0.5,1])
-    
-    scenarioAssumptions = [ 
-        [{"CPR":cpr}
-         ,{"回收":(0.5,12)}
-         ,{"CDR":cdr}
-         ,{"清仓":[{"资产池余额剩余比率":0.15}]}]
-        for cpr in list(cprs)
-        for cdr in list(cdrs)
-    ]    
-    
-    r_list = localAPI.run(BYD_AUTO_2021_2
-                 ,assumptions= scenarioAssumptions
-                 ,read=True)
-    # 注意 r_list 是一个列表
-
 3. pricing
 ----
 
