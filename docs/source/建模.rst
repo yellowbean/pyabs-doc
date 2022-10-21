@@ -434,7 +434,18 @@ ABCD 是在中国信贷市场常见的账户转移公式。
    :linenos:
    :emphasize-lines: 32-41,44
 
-  
+
+流动性支持建模
+----
+
+流动性支持 指一个第三方主体，为了保证平滑ABS产品的本息兑付，因此在一定额度下，对ABS的账户进行资金垫付行为。垫付金额可以后续偿还。
+
+.. literalinclude:: deal_sample/test14.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 32,38,46
+
+
 
 
 建模文件保存/读取
