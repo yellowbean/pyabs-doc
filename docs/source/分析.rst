@@ -165,33 +165,6 @@
 * ``True`` -> 表示把结果读取成 ``pandas.DataFrame``
 * ``False`` -> 表示把结果读取为json
 
-多情景分析 
-====
-用户可以设定多个情景参数，提交运行后，引擎返回一个字典。
-
-.. code-block:: python
-
-    myAssumption = [{"CPR":0.0}
-                    ,{"CDR":0.00}
-                    ,{"停止":"2025-01-01"}
-                    ,{"利率":["LPR5Y",[["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]]}
-                  ]
-
-    myAssumption2 = [{"CPR":0.0}
-                    ,{"CDR":0.01}
-                    ,{"停止":"2025-01-01"}
-                    ,{"利率":["LPR5Y",[["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]]}
-                  ]
-
-    r = localAPI.run(test01 
-                ,assumptions={"00":myAssumption,"01":myAssumption2}
-                ,read=True)
-
-    # 获取场景 ‘00’ 的结果 
-    r["00"]
-
-
-
 结果获取
 ====
 通过调用 `run()` 方法，``absbox`` 会发送一个HTTP请求到 API引擎，并且解析返回结果。
@@ -318,5 +291,53 @@
   :width: 400
   :alt: 估值
 
-图表
+多情景分析 
 ====
+
+用户可以通过设定多个情景，作为一个字典传入 `assumptions` 。提交运行后，引擎返回一个字典，key为场景名字，value为对应场景下的计算结果。
+
+.. code-block:: python
+
+    myAssumption = [{"CPR":0.0}
+                    ,{"CDR":0.00}
+                    ,{"停止":"2025-01-01"}
+                    ,{"利率":["LPR5Y",[["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]]}
+                  ]
+
+    myAssumption2 = [{"CPR":0.0}
+                    ,{"CDR":0.01}
+                    ,{"停止":"2025-01-01"}
+                    ,{"利率":["LPR5Y",[["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]]}
+                  ]
+
+    r = localAPI.run(test01 
+                ,assumptions={"00":myAssumption,"01":myAssumption2}
+                ,read=True)
+
+    # 获取场景 ‘00’ 的结果 
+    r["00"]
+
+多情景的现金流对比 
+----
+
+用户可以通过 ``flow_by_scenario`` 查看多情景下的，特定现金流对比。 
+
+.. code-block:: python 
+
+  flow_by_scenario(rs,["pool","flow","利息"])
+  flow_by_scenario(rs,["bonds","A1","利息"])
+
+
+.. image:: img/flow_by_scenario.png 
+  :width: 450
+  :alt: fbs
+   
+参数 ``annotation`` 表示是否在场景名称后 加入 字段名称 。
+
+.. code-block:: python 
+
+  flow_by_scenario(rs,["bonds","A1","利息"],annotation=False)
+   
+.. image:: img/flow_by_scenario2.png
+  :width: 450
+  :alt: fbs2
