@@ -327,11 +327,30 @@
   flow_by_scenario(rs,["pool","flow","利息"])
   flow_by_scenario(rs,["bonds","A1","利息"])
 
-
 .. image:: img/flow_by_scenario.png 
   :width: 450
   :alt: fbs
-   
+
+计算相同日期的现金流
+----
+
+由于同一个日期可能存在两条现金流记录。因此需要传入一个处理函数：
+  
+  * 合计值 -> 针对 同一个期间内的现金，例如 ``本金/利息``。需要传入 -> 合计函数 
+  * 最大值,最小值 -> 针对 同一个期间内的余额类，例如 ``余额`` 字段。需要传入 ->  最大/最小函数 
+    * 合计函数: ``sum`` | ``pd.Series.sum``
+    * 最小函数: ``min`` | ``pd.Series.min``
+    * 合计函数: ``max`` | ``pd.Series.max`` 
+
+.. code-block:: python 
+  
+  flow_by_scenario(rs,["accounts","account01","变动额"],aggFunc="sum")
+  flow_by_scenario(rs,["pool","flow","余额"],aggFunc="max")
+  flow_by_scenario(rs,["bonds","A1","利息"],aggFunc=pd.Series.sum)
+
+
+标记字段的场景名称
+----
 参数 ``annotation`` 表示是否在场景名称后 加入 字段名称 。
 
 .. code-block:: python 
