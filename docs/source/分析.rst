@@ -14,11 +14,11 @@
 ``"https://deal-bench.xyz/api"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。
 
 .. note::
-   计算服务器是基于REST Service 引擎,`absbox`通过HTTP协议和这个引擎进行交互。
+   计算服务器是基于RESTful Service 引擎, ``absbox`` 通过HTTP协议与引擎进行交互。
    引擎代码存放在 `Hastructure <https://github.com/yellowbean/Hastructure>`_
 
 
-实例化完成之后，便可以调用"``run()``"方法对已经建模的产品进行分析。
+实例化完成之后，便可以调用 ``run()`` 方法对已经建模的产品进行分析。
 
 .. code-block:: python
 
@@ -220,6 +220,12 @@
 .. image:: img/bond_flow.png
   :width: 400
   :alt: 债券现金流
+
+流动性支持流水
+---- 
+
+* ``result['liqProvider']["流动性支持方名称"]`` 
+
 
 整体概览
 ----
