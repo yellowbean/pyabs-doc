@@ -13,6 +13,9 @@ https://github.com/yellowbean/AbsBox/issues
 API 集成
 ----
 - 提供REST API与金融机构现有系统进行集成
+    - 通过 `Hastructure <https://github.com/yellowbean/Hastructure>`_ 
+        - 部署至机构内网环境，提供RESTful service
+        - 或部署至公网云服务器
 - Docker
 
 
