@@ -1,5 +1,5 @@
 安装
-====
+=======
 
 .. warning::
   `absbox` 因为用到了python 的 match语句，仅支持Python3.10
@@ -8,7 +8,7 @@
    :toctree: generated
 
 pip
-----
+--------
 通过`pip`进行安装稳定版本。
 
 .. code-block:: console
@@ -17,7 +17,7 @@ pip
 
 
 github
-----
+--------
 github版本会包括新功能以及更早的bug修复。本文档所有案例都经过Github版本的测试。
 
 .. code-block:: console
@@ -26,7 +26,7 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 
 
 版本升级
-----
+--------
 ``absbox`` 遵循开源版本号通用约定。
 
 * ``0.xx.xx.xx`` -> 表示测试版本，新版本语法尚未稳定
@@ -42,7 +42,7 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 
 
 版本确认
-----
+--------
 
 .. code-block:: console 
 
