@@ -18,6 +18,8 @@ API 集成
         - 或部署至公网云服务器
 - Docker
     - ``docker pull yellowbean/hastructure:latest``
+    - ``docker run -p 5000:8081 yellowbean/hastructure``
+    - 服务默认端口为 ``8081``
 
 当前API服务器状态
 --------
