@@ -59,3 +59,26 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 
 .. note ::
   `absbox` 内部使用 `pickle` 进行产品模型的文件持久化。
+
+私有计算服务器 v.s 公共计算服务器
+------------------------------
+
+使用 ``absbox`` 需要连接一个计算服务器。
+
+.. code-block:: python
+
+   from absbox import API
+   localAPI = API("https://deal-bench.xyz/api")
+
+其中 `` deal-bench.xyz/api `` 为公共服务器 ，完整可用的 ``公共服务器`` 请参见  `absbox.org <https://absbox.org>`_
+
+如果用户需要高性能的内网服务器部署，可以
+
+* 从 `Hastructure <https://github.com/yellowbean/Hastructure>`_ 代码下载后进行编译运行
+* 使用 docker镜像
+
+.. code-block:: bash
+
+  docker pull yellowbean/hastructure
+  docker run yellowbean/hastructure
+
