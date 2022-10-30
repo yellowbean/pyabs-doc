@@ -17,6 +17,7 @@ API 集成
         - 部署至机构内网环境,提供RESTful service
         - 或部署至公网云服务器
 - Docker
+  - ``docker pull yellowbean/hastructure:latest ``
 
 当前API服务器状态
 --------
