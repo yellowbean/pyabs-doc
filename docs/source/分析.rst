@@ -250,19 +250,9 @@
   :alt: 多债券现金流
    
 资产负债视角
---------
+-----------
 
-通过 ``balanceSheetView`` 传入日期列表，查看基于该时间点的ABS产品资产负债情况。
-
-.. code-block:: python
-
-    balanceSheetView(r,['2021-09-15','2021-12-15'])
-
-.. image:: img/bs_view.png 
-  :width: 450
-  :alt: BS
-
-如果不传入日期，那么默认为 ``债券的付款日`` 。
+通过 ``balanceSheetView`` 查看基于该时间点的ABS产品资产负债情况。
 
 .. image:: img/bs_view_default.png 
   :width: 450
