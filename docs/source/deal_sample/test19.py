@@ -56,10 +56,3 @@ test01 = 信贷ABS(
                  ]
                  ,("新状态","加速清偿")]]}
  )
-
-myAssump = [{"CDR":0.06}]
-
-localAPI = API("http://localhost:8081")
-#remoteAPI = API("https://absbox.org/api/latest")
-#remoteAPI = API("https://deal-bench.xyz/api")
-r = localAPI.run(test01,assumptions=myAssump,read=True)
