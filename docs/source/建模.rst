@@ -867,7 +867,7 @@ ABCD 是在中国信贷市场常见的账户转移公式。
 .. literalinclude:: deal_sample/test19.py
    :language: python
    :linenos:
-   :emphasize-lines: 50-55
+   :emphasize-lines: 52-57
 
 
 
