@@ -270,21 +270,6 @@
 分配规则位置
 ^^^^^^^^^^^^
 
-        case ("兑付日","加速清偿"):
-            _w_tag = f"DistributionDay (DealAccelerated Nothing)"
-        case ("兑付日","违约"):
-            _w_tag = f"DistributionDay (DealDefaulted Nothing)"
-        case ("兑付日",_st):
-            _w_tag = f"DistributionDay {mapping[_st]}"
-        case "兑付日" | "未违约":
-            _w_tag = f"DistributionDay Amortizing"
-        case "清仓回购":
-            _w_tag = "CleanUp"
-        case "回款日" | "回款后" :
-            _w_tag = f"EndOfPoolCollection"
-
-
-
 建模方式为一个map, 支持的key为:
 
   * ``(兑付日,摊销)`` / ``(兑付日,未违约)`` / ``未违约``/ ``兑付日`` , 表示动作只有在 处于非违约状态的情况下，在债券支付日执行。
