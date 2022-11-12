@@ -2,8 +2,7 @@
 ****
 
 建模的过程是把ABS事实性的数据(比如债券信息，资产池，分配规则等)，进行实例化的过程。
-
-目前 ``absbox`` 支持 ``信贷ABS`` ,交易所的产品亦可以通过此类进行建模。
+目前 ``absbox`` 支持 ``SPV`` ,银行间/交易所的产品通过此类进行建模。
 
 .. _信贷ABS:
 
@@ -11,8 +10,22 @@
 =======
 .. code-block:: python
 
-   from absbox.local.china import 信贷ABS
+  from absbox.local.china import SPV
 
+  class SPV:
+      名称: str -> 任意字符串名称 
+      日期: dict  -> 产品的日期 
+      资产池: dict
+      账户: tuple
+      债券: tuple
+      费用: tuple
+      分配规则: dict   -> 现金流分配机制
+      归集规则: tuple   -> 描述资产池现金流如何归集到产品的账户
+      清仓回购: tuple = None  -> 预留,用户可以通过 <假设> 参数传入各种清仓回购的条款
+      流动性支持:dict = None -> 描述外部的流动性支持,或者描述现金对外部机构的流出
+      自定义: dict = None   -> 描述自定义的数据,包括常量/公式/曲线,用于产品设计
+      触发事件: dict = None  -> 描述 产品进入 ``加速清偿`` ``违约`` 的条件
+      状态:str = "摊销"   -> 默认的产品状态,其他可选项为"循环","加速清偿","违约".现金流分配机制会按照状态不同而不同.
 
 产品要素
 =======
@@ -894,5 +907,5 @@ ABCD 是在中国信贷市场常见的账户转移公式。
 .. code-block:: python
 
   ...
-  from absbox.local.china import 信贷ABS
-  信贷ABS.load("path/to/file")
+  from absbox.local.china import SPV
+  SPV.load("path/to/file")
