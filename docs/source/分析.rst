@@ -6,11 +6,11 @@
 .. code-block:: python
 
    from absbox import API,save
-   from absbox.local.china import 信贷ABS,show
+   from absbox.local.china import SPV,show
    localAPI = API("https://deal-bench.xyz/api")
 
 
-``"https://deal-bench.xyz/api"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。
+``"https://deal-bench.xyz/api"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。完整列表请参考 `absbox.org <https://absbox.org>`_
 
 .. note::
    计算服务器是基于RESTful Service 引擎, ``absbox`` 通过HTTP协议与引擎进行交互。
