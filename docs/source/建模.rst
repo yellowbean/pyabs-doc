@@ -6,7 +6,7 @@
 
 .. _信贷ABS:
 
-信贷ABS
+SPV
 =======
 .. code-block:: python
 
