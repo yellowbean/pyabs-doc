@@ -8,6 +8,7 @@
 
 SPV
 =======
+
 .. code-block:: python
 
   from absbox.local.china import SPV
@@ -881,6 +882,15 @@ ABCD 是在中国信贷市场常见的账户转移公式。
    :language: python
    :linenos:
    :emphasize-lines: 52-57
+
+资产类别:先息后本 
+---------------
+
+.. literalinclude:: deal_sample/test20.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 7-13
+
 
 
 
