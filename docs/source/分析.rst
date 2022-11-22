@@ -370,3 +370,29 @@
 .. image:: img/flow_by_scenario2.png
   :width: 450
   :alt: fbs2
+
+单独资产池现金流计算
+====================
+
+用户可以构造单独的资产池进行现金流测算,并伴随施加一定的压力参数
+
+.. code-block:: python 
+
+
+    from absbox.local.china import SPV
+    from absbox import API
+    localAPI = API("http://localhost:8081")
+    
+    
+    mypool = {'清单':[["按揭贷款"
+            ,{"放款金额":120,"放款利率":["固定",0.045],"初始期限":30
+              ,"频率":"每月","类型":"等额本息","放款日":"2021-02-01"}
+              ,{"当前余额":120
+              ,"当前利率":0.10
+              ,"剩余期限":5
+              ,"状态":"正常"}]],
+             '封包日':"2021-04-04"}
+    
+    
+    localAPI.runPool(mypool,assumptions=[])
+
