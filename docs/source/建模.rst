@@ -925,6 +925,17 @@ ABCD 是在中国信贷市场常见的账户转移公式。
    :linenos:
    :emphasize-lines: 7-13
 
+资产级别风险参数设置 
+-------------------
+
+用户可以对资产池内资产分组进行风险参数设置.
+
+.. literalinclude:: deal_sample/test21.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 56-71
+
+
 
 
 

@@ -391,6 +391,36 @@
   :width: 450
   :alt: fbs2
 
+资产明细级别风险参数设置
+======================
+
+如果存在底层清单, 用户可以对资产池内所有的资产进行分组,然后每个组使用特定的风险参数.
+
+如下面示例, 构造两个风险参数组 ``Asset01Assump`` ``Asset02Assump``.
+然后,在下面 ``([0],Asset01Assump)``,表示 风险参数 ``Asset01Assump`` 将会作用于 下标为 0 的资产.
+同理,如果需要将这个风险参数作用于多个资产,则可以增加下标 ``([0,1,2,5],Asset01Assump)``  将会作用于下标0,1,2,5的资产.
+
+
+.. code-block:: python 
+
+    Asset01Assump = [{"CPR":0.1}
+                    ,{"回收":(0.5,1)}
+                    ,{"CDR":0.0}]
+    
+    Asset02Assump = [{"CPR":0.1}
+                    ,{"回收":(0.5,1)}
+                    ,{"CDR":0.01}]
+    
+    
+    myAssumption = ([([0],Asset01Assump),([1],Asset02Assump)],
+                    [{"利率":["LPR5Y",[["2022-01-01",0.05]]]}])
+    
+    
+    r = localAPI.run(test01
+                 ,assumptions=myAssumption             
+                 ,read=True)
+    
+
 单独资产池现金流计算
 ====================
 
