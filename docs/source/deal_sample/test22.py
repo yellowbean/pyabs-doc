@@ -1,14 +1,40 @@
 from absbox import API
-from absbox.local.util import aggCFby,bondView,PnLView,balanceSheetView,irr,update_deal
-from absbox.local.china import SPV
 
 localAPI = API("https://absbox.org/api/latest",'chinese')
 
-mypool = {'清单':[["租赁",{"初始租金":100,"初始期限":12,"频率":"月末","起始日":"2021-02-01","计提周期":"季度末", "涨幅":0.05}]
-                 #,["租赁",{"初始租金":100,"初始期限":12,"频率":"月末","起始日":"2021-02-01","计提周期":"季度末", "涨幅":[0.05,0.06,0.0]}]
-                 #,["租赁",{"固定租金":100,"初始期限":12,"频率":["每月",20],"起始日":"2021-02-01"}]
-               ]
-         ,'封包日':"2021-04-04"}
+mypool = {"清单":[["租赁",{"初始租金":100,"初始期限":12,"频率":"月末","起始日":"2021-01-31","计提周期":"季度末", "涨幅":0.085}]
+                #,["租赁",{"初始租金":100,"初始期限":12,"频率":"月末","起始日":"2021-02-01","计提周期":"季度末", "涨幅":[0.05,0.06,0.0]}]
+                #,["租赁",{"固定租金":100,"初始期限":12,"频率":["每月",20],"起始日":"2021-02-01"}]
+                ]
+         ,"封包日":"2021-01-04"}
+
+from absbox.local.util import aggCFby
+p = localAPI.runPool(mypool,assumptions=[{"租赁截止日":"2023-02-01"},],read=True)
+# 对租金按月份进行归集     
+aggCFby(p,"M",["租金"]).plot.bar(rot=45,ylabel="租金合计")
+
+
+p = localAPI.runPool(mypool,assumptions=[{"租赁截止日":"2023-02-01"}
+                                        ,{"租赁间隔":25}],read=True)
+aggCFby(p,"M",["租金"]).plot.bar(rot=45,ylabel="租金合计")
+
+p = localAPI.runPool(mypool,assumptions=[{"租赁截止日":"2023-02-01"}
+                                        ,{"租赁间隔":25}
+                                        ,{"租赁年涨幅":0.15}],read=True)
+aggCFby(p,"M",["租金"]).plot.bar(rot=45,ylabel="租金合计")
+
+increase_curve_assump = [{"租赁年涨幅":[["2021-01-01",0.05]
+                          ,["2022-01-01",0.15]
+                          ,["2023-01-01",0.35]]}
+                         ,{"租赁截止日":"2023-02-01"}
+                         ,{"租赁间隔":25}]
+p = localAPI.runPool(mypool
+                     ,assumptions=increase_curve_assump
+                     ,read=True)
+aggCFby(p,"M",["租金"]).plot.bar(rot=45,ylabel="租金合计")
+
+from absbox.local.util import npv
+npv(p,rate=0.07,init=("2020-07-26",0))
 
 deal_data = ["租金类ABS案例"
     ,{"封包日":"2021-03-31","起息日":"2021-06-15","首次兑付日":"2021-07-26"
@@ -47,17 +73,27 @@ deal_data = ["租金类ABS案例"
     ,None]
 
 
-assumps=[{"租赁截止日":"2023-02-01"} ,{"租赁间隔":25} 
-         ,{"租赁年涨幅":[["2021-01-01",0.05],["2022-01-01",0.15],["2023-01-01",0.35]]}]
+from absbox.local.china import SPV
+from absbox.local.util import bondView
+r = localAPI.run(SPV(*deal_data),assumptions=[{"租赁截止日":"2023-02-01"}
+                                        ,{"租赁间隔":25}
+                                        ,{"租赁年涨幅":[["2021-01-01",0.05]
+                                                      ,["2022-01-01",0.15]
+                                                      ,["2023-01-01",0.35]]}],read=True)
 
-# 单一融资方案测算 
-r = localAPI.run(SPV(*deal_data),assumptions=assumps,read=True)
+# 获取 A1 B的现金流.
+r['bonds']['A1']
+r['bonds']['B']
 
+# 将两个债券现金流一并展示 
 bondView(r).drop([("A1","备注"),("B","备注")],axis=1)
 
-irr(r['bonds']['A1'],init=('2021-06-26',-60_000.00))
 
+from absbox.local.util import irr
 irr(r['bonds']['B'],init=('2021-06-26',-10000.00))
+# 返回值: 1.152 -> 在2021年6月投入 10000元下, B的年化回报率 
+irr(r['bonds']['A1'],init=('2021-06-15',-60000.00))
+# 返回值: 1.152 -> 在2021年6月投入 60000.00元下, A1的年化回报率 
 
 # 多融资方案比较 
 ## 总融资规模 
@@ -67,11 +103,16 @@ total_issuance = 70_000
 financing_plans = [(60_000,0.075,"2022-06-15"),(50_000,0.05,"2022-01-15")] 
 
 ## 资本结构方案 
-liability_plans = [ (('A1',  {'当前余额': b, '当前利率': r,   '初始余额': b,   '初始利率': r,   '起息日': '2020-01-03',
+liability_plans = [ (('A1',  {'当前余额': b, '当前利率': r,   '初始余额': b,   '初始利率': r,   '起息日': '2021-06-15',
    '利率': {'固定': 0.08}, '债券类型': {'锁定摊还': t}}),
-  ('B',  {'当前余额': total_issuance - b,   '当前利率': 0.0,   '初始余额': total_issuance - b,   '初始利率': 0.0,   '起息日': '2020-01-03',
+  ('B',  {'当前余额': total_issuance - b,   '当前利率': 0.0,   '初始余额': total_issuance - b,   '初始利率': 0.0,   '起息日': '2021-06-15',
    '利率': {'期间收益': 0.02}, '债券类型': {'权益': None}}))
     for b,r,t in financing_plans ]
+
+from absbox.local.util import update_deal
+
+assumps = [{"租赁截止日":"2023-02-01"} ,{"租赁间隔":25} 
+         ,{"租赁年涨幅":[["2021-01-01",0.05],["2022-01-01",0.15],["2023-01-01",0.35]]}]
 
 ## 产品方案 
 SPVs = [ SPV(*update_deal(deal_data,4,p)) for p in liability_plans ]
