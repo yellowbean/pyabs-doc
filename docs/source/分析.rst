@@ -320,6 +320,25 @@
   :width: 400
   :alt: 估值
 
+
+债券 静态利差
+-------------------------
+
+.. code-block:: python
+
+  result = localAPI.run(test01,
+           assumptions=None,
+           pricing={"债券":{"A1":("2021-10-15",80)},"利率曲线":[["2020-01-01",0.03],["2024-01-01",0.03]]},
+           read=True)
+  result['pricing']
+
+
+.. image:: img/z-spread.png
+  :width: 400
+  :alt: z-spread
+
+
+
 内部收益率测算
 --------------
 
