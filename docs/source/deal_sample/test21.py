@@ -62,8 +62,9 @@ Asset02Assump = [{"CPR":0.1}
                 ,{"CDR":0.01}]
 
 
-myAssumption = ([([0],Asset01Assump),([1],Asset02Assump)],
-                [{"利率":["LPR5Y",[["2022-01-01",0.05]]]}])
+myAssumption = ["明细",
+                [([0],Asset01Assump),([1],Asset02Assump)],
+                [{"利率":["LPR5Y",["2020-01-01",0.05]]}]]
 
 
 r = localAPI.run(test01
