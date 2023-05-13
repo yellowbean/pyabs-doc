@@ -2,26 +2,12 @@
 
 # -- Project information
 
-project = 'AbsBox'
-copyright = '2022, Xiaoyu,Zhang'
-author = 'xiaoyu, zhang'
+project = 'absbox'
+copyright = '2023, Xiaoyu Zhang'
+author = 'Xiaoyu Zhang'
 
-release = '0.1.2'
-version = '0.1.0'
-
-
-# These folders are copied to the documentation's HTML output
-#html_static_path = ['_static']
-
-# These paths are either relative to html_static_path
-# or fully qualified paths (eg. https://...)
-#html_css_files = [
- #   #'css/custom.css',
-#]
-
-#html_js_files = [
-#    'js/baidu.js',
-#]
+release = '0.8'
+version = '0.8.4'
 
 # -- General configuration
 
@@ -31,16 +17,23 @@ extensions = [
     'sphinx.ext.autodoc',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-    'sphinx_toolbox.installation',
-    'sphinx_toolbox.collapse'
-    #'sphinx_design'
-    #'myst_parser'
 ]
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
     'sphinx': ('https://www.sphinx-doc.org/en/master/', None),
 }
+
+html_theme_options = {
+    # Toc options
+    'collapse_navigation': True,
+    'sticky_navigation': True,
+    'navigation_depth': 4,
+    'includehidden': True,
+    'titles_only': False    
+}
+
+
 intersphinx_disabled_domains = ['std']
 
 templates_path = ['_templates']
