@@ -250,50 +250,14 @@
   :alt: 债券违约
 
 
-
-
-多债券现金流
-------------
-
-查看债券现金流 ``bondView()`` 对多个债券的现金流进行查看。
-
-.. image:: img/multi-bond-view.png 
-  :width: 450
-  :alt: 多债券现金流
-   
-可以选择债券的个别字段
-
-.. image:: img/multi-bond-view2.png 
-  :width: 450
-  :alt: 多债券现金流
-
-
 流动性支持流水
 -------------
 
 * ``result['liqProvider']["流动性支持方名称"]`` 
 
 
-整体概览
---------
-如果调用 ``show()`` 对整个产品现金流分配进行概览，包括展示从资产池，账户，费用，以及债券支付情况。
-
-.. code-block:: python
-
-  show(result)
-
-  
-资产负债视角
------------
-
-通过 ``balanceSheetView`` 查看基于该时间点的ABS产品资产负债情况。
-
-.. image:: img/bs_view_default.png 
-  :width: 450
-  :alt: BS
-
 保存为HTML
---------
+-------------
 
 通过使用 ``float_format`` 参数
 
