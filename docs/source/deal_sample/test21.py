@@ -67,9 +67,9 @@ myAssumption = ["明细",
                 [{"利率":["LPR5Y",["2020-01-01",0.05]]}]]
 
 
-r = localAPI.run(test01
-             ,assumptions= myAssumption             
-             ,read=True)
+#r = localAPI.run(test01
+#             ,assumptions= myAssumption             
+#             ,read=True)
 
 
-r['pool']['flow']
+#r['pool']['flow']
