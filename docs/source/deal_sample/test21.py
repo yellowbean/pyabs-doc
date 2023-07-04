@@ -40,7 +40,7 @@ test01 = SPV(
     ,(("信托费用",{"类型":{"固定费用":30}}),)
     ,{"未违约":[
          ["支付费用",["账户01"],['信托费用']]
-         ,["支付利息","账户01",["A1"]]
+         ,["计提支付利息","账户01",["A1"]]
          ,["支付本金","账户01",["A1"]]
          ,["支付本金","账户01",["B"]]
          ,["支付收益","账户01","B"]
@@ -67,9 +67,9 @@ myAssumption = ["明细",
                 [{"利率":["LPR5Y",["2020-01-01",0.05]]}]]
 
 
-r = localAPI.run(test01
-             ,assumptions= myAssumption             
-             ,read=True)
+#r = localAPI.run(test01
+#             ,assumptions= myAssumption             
+#             ,read=True)
 
 
-r['pool']['flow']
+#r['pool']['flow']
