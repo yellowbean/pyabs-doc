@@ -9,15 +9,27 @@
 
 pip
 --------
-通过 ``pip`` 进行安装稳定版本。
+通过 ``pip`` 进行安装稳定版本。如果针对版本升级请使用  `` -U `` 参数.
 
 .. code-block:: console
 
     pip install absbox
 
+    ### 升级到最新版本
+    pip install -U absbox
 
-github
---------
+
+国内用户
+-----------
+国内用户访问pypi可能速度存在问题, 建议替换国内的pypi源, 参考如下
+
+* 清华 -> https://mirrors.tuna.tsinghua.edu.cn/help/pypi/
+* 阿里 -> https://developer.aliyun.com/mirror/pypi
+* 腾讯 -> https://mirrors.cloud.tencent.com/help/pypi.html
+  
+
+github(测试版本)
+------------------
 github版本会包括新功能以及更早的bug修复。本文档所有案例都经过Github版本的测试。
 
 .. code-block:: console
@@ -26,10 +38,10 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 
 
 版本升级
---------
+-----------
 ``absbox`` 遵循开源版本号通用约定。
 
-* ``0.xx.xx.xx`` -> 表示测试版本，新版本语法尚未稳定
+* ``0.X.A.B`` -> 表示测试版本, 新版本语法尚未稳定
 * ``X.A.B``
   
   *  ``X`` -> 主版本，不同主版本之间语法不兼容
@@ -60,8 +72,11 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 .. note ::
   `absbox` 内部使用 `pickle` 进行产品模型的文件持久化。
 
+
+
+
 私有计算服务器 v.s 公共计算服务器
-------------------------------
+----------------------------------
 
 使用 ``absbox`` 需要连接一个计算服务器。
 
