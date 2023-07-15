@@ -142,32 +142,6 @@
 
 
 
-2.5 债券持仓现金流
-^^^^^^^^^^^^^^^^
-
-用户可以通过参数 `position` 传入持仓债券的张数和对应层级，从而获取对应债券实际获得的现金流
-
-.. code-block:: python
-
-  r = localAPI.run(BYD_AUTO_2021_2
-             ,assumptions= myAssumption
-             ,pricing= myPricing
-             ,read=True
-             ,position={"次级":2000}
-             )
-
-通过加入 ``position`` 参数，传入当前持仓的名称，持仓的债券张数
-
-.. code-block:: python
-
-  r['position']['次级']
-
-即可获取基于持仓的现金流
-
-.. image:: img/position_bond_flow.png
-  :width: 500
-  :alt: 持仓现金流
-
 
 3. pricing
 -----------
