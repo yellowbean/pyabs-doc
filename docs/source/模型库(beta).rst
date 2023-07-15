@@ -18,7 +18,10 @@
 使用方式 
 --------
 
-1. 登陆
+认证
+^^^^^^^^^
+
+`library_url` 指向模型库服务器地址。
 
 .. code-block:: python
 
@@ -27,17 +30,38 @@
     localAPI.loginLibrary("test","test",deal_library=library_url)
 
 
-2. 查询
+查询
+^^^^^^^^^
 
-传入债券ID
+用户可以通过传入债券ID，以及其他参数，对模型库中的模型进行查询。
 
 .. code-block:: python
 
     localAPI.queryLibrary(["22吉时代3A2_bc"],deal_library=library_url)
 
-3. 运行
+其他可选参数：
 
-`22JSD03` 为 前序步骤 查询的产品ID
+.. code-block:: python
+
+    localAPI.queryLibrary(["22吉时代3A2_bc"]
+                          ,deal_library=library_url
+                          ,read=True  # 是否返回为dataframe
+                          ,prod=True  # 是否只包括正式模型 
+                          ,history=False # 是否包括历史模型 
+                          ,and_tags=[]  # 必须包含所有列举的标签
+                          ,or_tags=[]   # 任意包含列举的标签
+                          )
+
+
+运行
+^^^^^^^^^
+此步骤只需要传入
+
+* 产品ID ： `22JSD03` 为 前序步骤 查询的产品ID
+* 模型库地址： 即 deal_library 
+* 假设
+* 定价假设
+* reader
 
 .. code-block:: python
 
@@ -47,6 +71,7 @@
                            ,assump = [{"CPR":0.01}  # 年化早偿付率 1%
                                      ,{"CDR":0.01}  # 年化违约率  1%
                                      ,{"回收":(0.7,18)}]
-                           ,reader="china.SPV",read=True)
+                           ,reader="china.SPV"
+                           ,read=True)
 
-
+返回值和 API.run() 一致。
