@@ -57,11 +57,11 @@
 ^^^^^^^^^
 此步骤只需要传入
 
-* 产品ID ： `22JSD03` 为 前序步骤 查询的产品ID
-* 模型库地址： 即 deal_library 
-* 假设
-* 定价假设
-* reader
+* 产品ID : `22JSD03` 为 前序步骤 查询的产品ID
+* 模型库地址: 即 deal_library 
+* 假设: 同 :ref:`2. assumptions`
+* 定价假设: :ref:`3. pricing assumption`
+* reader: 如果中国产品选择 "china.SPV"
 
 .. code-block:: python
 
