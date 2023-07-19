@@ -1084,28 +1084,16 @@ ABCD 是在中国信贷市场常见的账户转移公式。
    :linenos:
    :emphasize-lines: 105-119
 
+邮元家和2022年第一期个人住房抵押贷款 
+----------------------------------------
 
-建模文件保存/读取
-===================
-建议通过python自带的 ``pickle`` 包对建模文件进行存储。
+* 存量RMBS现金流轨迹表建模
+* 用Ledger对ABCD进行建模
 
-保存
---------
-建模的内容可以通过调用 ``save()`` 方法将内容保存至本地文件夹。
+.. literalinclude:: deal_sample/test25.py
+   :language: python
+   :linenos:
+   :emphasize-lines: 179-181,172
 
-.. code-block:: python
 
-  ...
-  from absbox import API,save
-  deal = .... #
-  save(deal,"path/to/file")
 
-读取
---------
-建模的内容可以通过调用 ``load()`` 方法将内容保存至本地文件夹。
-
-.. code-block:: python
-
-  ...
-  from absbox.local.china import SPV
-  SPV.load("path/to/file")
