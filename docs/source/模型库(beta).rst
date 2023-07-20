@@ -1,7 +1,7 @@
 模型库(beta)
 ============
 
-`模型库` 是部署于云端，包含已建模的产品集合,用户通过absbox API调用现金流模型进行测算,估值。
+`模型库` 是部署于云端，包含已建模的产品集合,用户通过absbox API调用模型,进行测算,估值。
 
 .. note::
 
@@ -32,17 +32,20 @@
     # 测试账户： 用户名test/密码test
     localAPI.loginLibrary("test","test",deal_library=library_url)
 
+.. note::
+
+   测试账户仅包含少部分产品查询和运行权限。  
 
 查询
 ^^^^^^^^^
 
-用户可以通过传入债券ID,以及选择性参数,对模型库中的模型进行查询。
+用户通过传入债券ID,以及筛选参数,发起模型库查询。
 
 .. code-block:: python
 
     localAPI.queryLibrary(["22吉时代3A2_bc"],deal_library=library_url)
 
-其他可选参数：
+其他筛选参数：
 
 .. code-block:: python
 

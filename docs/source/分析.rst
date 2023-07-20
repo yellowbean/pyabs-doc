@@ -30,21 +30,6 @@
                read=True
               )
 
-
-如果 模型文件已经通过下列命令存储至本地目录
-
-.. code-block:: python
-
-    save(jy, "test02.obj")
-
-那么 通过传入指定本地文件路径运行分析
-
-.. code-block:: python
-
-    localAPI.run("test02.obj"
-            ,assumptions=[{"CPR":0.01},{"CDR":0.01},{"回收":(0.7,18)}]
-            ,read=True)
-
 参数
 =======
 1. ABS产品模型
@@ -53,7 +38,7 @@
 
 2. assumptions
 ----------------
-用户需要传入一个map的列表。每一个map分别代表着: 资产池假设,清仓回购假设,利率曲线设定.
+用户需要传入一个map的 ``列表``。每一个map分别代表着: 资产池假设,清仓回购假设,利率曲线设定.
 
 2.1 资产池假设
 ^^^^^^^^^^^^^^^^^
@@ -141,9 +126,41 @@
                           ,[<资产池表现假设>]]} ``
 
 
+2.5 其他
+^^^^^^^^^^^^^
+
+* 查看中间变量
+
+通过传入 <公式> 和 <datePattern> 的组合,引擎会返回对应日期下公式的值
+
+.. code-block:: python
+
+    myAssumption = [{"CPR":0.01}
+                   ,{"查看":
+                      [("月末",("债券余额",))]}]
 
 
-3. pricing assumption
+* 财务报表
+
+通过传入<datePattern>,获取基于日期序列下的 ``资产负债表``和 ``现金流量表``
+
+.. code-block:: python
+
+    myAssumption = [{"CPR":0.01}
+                   ,{"财务报表":"MonthEnd"}]
+
+* 提前停止测算
+
+测算将会进行到 ``2023-9-1`` 为止。
+
+.. code-block:: python
+
+    myAssumption = [{"CPR":0.01}
+                   ,{"停止":"2023-09-01"}]
+
+
+
+1. pricing assumption
 ----------------------
 
 3.1 贴现曲线
