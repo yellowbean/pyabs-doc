@@ -122,8 +122,10 @@
 2.4 循环资产假设
 ^^^^^^^^^^^^^^^^^^
 
-格式为 ``{"RevolvingAssets":[["constant",[<可购买资产列表>]]
-                          ,[<资产池表现假设>]]} ``
+.. code-block:: python
+
+  {"RevolvingAssets":[["constant",[<可购买资产列表>]]
+                      ,[<资产池表现假设>]]}
 
 
 2.5 其他
@@ -142,7 +144,7 @@
 
 * 财务报表
 
-通过传入<datePattern>,获取基于日期序列下的 ``资产负债表``和 ``现金流量表``
+通过传入 <datePattern> ,获取基于日期序列下的 ``资产负债表`` 和 ``现金流量表``
 
 .. code-block:: python
 
@@ -160,7 +162,7 @@
 
 
 
-1. pricing assumption
+3. pricing assumption
 ----------------------
 
 3.1 贴现曲线
