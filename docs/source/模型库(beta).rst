@@ -32,6 +32,9 @@
     # 测试账户： 用户名test/密码test
     localAPI.loginLibrary("test","test",deal_library=library_url)
 
+    ## 如果需要隐匿密码, 密码通过命令行输入
+    localAPI.safeLogin("xyz",deal_library=library_url)
+
 .. note::
 
    测试账户仅包含少部分产品查询和运行权限。  
@@ -79,7 +82,8 @@
                                       ,{"CDR":0.01}  # 年化违约率  1%
                                       ,{"回收":(0.7,18)}]
                            ,reader="china.SPV"
-                           ,read=True)
+                           ,read=True
+                           ,production=True)
 
 
 返回值和 API.run() 一致。
