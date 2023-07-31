@@ -241,6 +241,18 @@
   :width: 400
   :alt: 债券现金流
 
+债券持仓现金流
+----------------
+
+.. code-block:: python
+
+  from absbox.local.util import positionFlow
+
+  r = localAPI.run()
+  
+  positionFlow(r, {'优先A1级':15000000.0} )
+
+
 债券损失金额
 -----------
 
@@ -317,7 +329,7 @@
 多情景分析 
 ============
 
-用户可以通过设定多个情景，作为一个字典传入 `assumptions` 。提交运行后，引擎返回一个字典，key为场景名字，value为对应场景下的计算结果。
+用户通过设定多个情景，作为字典传入 `assumptions` 。提交运行后，引擎返回字典，key为场景名字，value为对应场景下的计算结果。
 
 .. code-block:: python
 
@@ -343,47 +355,38 @@
 多情景的现金流对比 
 ----------------
 
-用户可以通过 ``flow_by_scenario`` 查看多情景下的，特定现金流对比。 
+用户可以通过 ``flow_by_scenario`` 查看多情景下的，特定现金流（资产池/账户/费用/债券等）对比。 
 
 .. code-block:: python 
 
+  from absbox.local.component import flow_by_scenario
+
   flow_by_scenario(rs,["pool","flow","利息"])
-  flow_by_scenario(rs,["bonds","A1","利息"])
+  flow_by_scenario(rs,["bonds","A1","本金"])
 
 .. image:: img/flow_by_scenario.png 
   :width: 450
   :alt: fbs
 
-计算相同日期的现金流
-----------------
-
-由于同一个日期可能存在两条现金流记录。因此需要传入一个处理函数：
-  
-  * 合计值 -> 针对 同一个期间内的现金，例如 ``本金/利息``。需要传入 -> 合计函数 
-  * 最大值,最小值 -> 针对 同一个期间内的余额类，例如 ``余额`` 字段。需要传入 ->  最大/最小函数 
-  
-    * 合计函数: ``sum`` | ``pd.Series.sum``
-    * 最小函数: ``min`` | ``pd.Series.min``
-    * 合计函数: ``max`` | ``pd.Series.max`` 
-
-.. code-block:: python 
-  
-  flow_by_scenario(rs,["accounts","account01","变动额"],aggFunc="sum")
-  flow_by_scenario(rs,["pool","flow","余额"],aggFunc="max")
-  flow_by_scenario(rs,["bonds","A1","利息"],aggFunc=pd.Series.sum)
-
-
-标记字段的场景名称
------------------
-参数 ``annotation`` 表示是否在场景名称后 加入 字段名称 。
+如果需要对比多个字段，可以在最后元素传入dataframe的列表
 
 .. code-block:: python 
 
-  flow_by_scenario(rs,["bonds","A1","利息"],annotation=False)
-   
-.. image:: img/flow_by_scenario2.png
+  flow_by_scenario(rs,["bonds","A1", ["本金","本息合计"]])
+
+.. image:: img/flow_by_scenario3.png 
   :width: 450
   :alt: fbs2
+
+如果对应的查询数据是row index，那么查询：
+
+.. code-block:: python 
+
+  flow_by_scenario(rs,["pricing","A1"],node="idx")
+
+.. image:: img/flow_by_scenario4.png 
+  :width: 450
+  :alt: fbs3
 
 资产明细级别风险参数设置
 ======================
