@@ -39,8 +39,23 @@
 
    测试账户仅包含少部分产品查询和运行权限。  
 
-查询
-^^^^^^^^^
+查询所有可用债券
+^^^^^^^^^^^^^^^^^^^
+
+用户可以查询所有可用的债券（受限于访客权限）
+
+.. code-block:: python
+
+    rs = localAPI.listLibrary(deal_library=library_url,read=True)
+    rs
+
+.. image:: img/list_library.png
+  :width: 500
+  :alt: 查询所有债券
+
+
+查询特定债券
+^^^^^^^^^^^^^
 
 用户通过传入债券ID,以及筛选参数,发起模型库查询。
 
