@@ -5,28 +5,24 @@
 
 .. code-block:: python
 
-   from absbox import API,save
-   from absbox.local.china import SPV,show
+   from absbox import API,save,SPV
    localAPI = API("https://absbox.org/api/latest")
 
 
-``"https://absbox.org/api/latest"`` 可以替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。完整列表请参考 `absbox.org <https://absbox.org>`_
+``"https://absbox.org/api/latest"`` 可替换成本地部署,或者私有云的服务器，以提高响应速度和计算能力。公共完整列表请参考 `absbox.org <https://absbox.org>`_
 
 .. note::
    计算服务器是基于RESTful Service 引擎, ``absbox`` 通过HTTP协议与引擎进行交互。
-   引擎代码存放在 `Hastructure <https://github.com/yellowbean/Hastructure>`_
+   引擎代码托管于 `Hastructure <https://github.com/yellowbean/Hastructure>`_
 
 
-实例化完成之后，便可以调用 ``run()`` 方法对已经建模的产品进行分析。
+实例化完成后，可调用 ``run()`` 方法对已经建模的产品进行分析。
 
 .. code-block:: python
 
   localAPI.run(jy,    # 这里 jy 就表示一个ABS产品模型
-               assumptions=[{"CPR":0.01}  # 年化早偿付率 1%
-                           ,{"CDR":0.01}  # 年化违约率  1%
-                           ,{"回收":(0.7,18)}],  # 回收率 70%，回收周期 18
-               pricing={"贴现日":"2023-06-22"
-                       ,"贴现曲线":[["2020-01-01",0.025]]},
+               poolAssump = <资产池表现假设>,
+               runAssump  = <产品运行假设> ,
                read=True
               )
 
@@ -36,149 +32,198 @@
 ---------------
 第一个参数为需要分析的 ``产品模型`` 对象 , 该对象是通过 建模 页面对产品要素进行建模后的对象。
 
-2. assumptions
-----------------
-用户需要传入一个map的 ``列表``。每一个map分别代表着: 资产池假设,清仓回购假设,利率曲线设定.
-
-2.1 资产池假设
-^^^^^^^^^^^^^^^^^
+2. 资产池表现假设
+-------------------
 针对不同底层资产类别， 用户可以传入不同的资产池假设。
 
-* 居民住房按揭贷款
-   * ``{"CPR":0.01}`` , 假设资产池年化早偿率为1%
-   * ``{"CDR":0.01}`` , 假设资产池年化违约率为1%
-   * ``{"回收":(0.7,18)`` ,假设资产违约后，回收率为 70%,回收周期为 18 .
+2.1 住房按揭/工商贷款/消费贷款
+""""""""""""""""""""""""""""
+
+.. code-block:: python
+
+  ("Pool",("Mortgage",{"CDR":0.01},{"CPR":0.01},{"Rate":0.7,"Lag":18},None)
+          ,None
+          ,None)
+
+输入
+  * ``违约假设``
+
+    * ``{"CDR":0.01}`` -> 年化违约率 
+    * ``{"CDR":[0.01,0.02,0.0]}`` -> 年化违约率曲线
+  * ``早偿假设``
+    
+    * ``{"CPR":0.01}`` -> 早偿率 
+    * ``{"CPR":[0.01,0.02,0.0]}`` -> 早偿率曲线
+  * ``回收假设``
+  
+    * ``{"Rate":0.7,"Lag":18}``
 
 .. note::
     如果资产付款周期为 *月* 的话, 那么18 表示 18月 之后，将会有 70%的违约金额会变成回收金额进入资产池。
 
-2.1.0 资产池假设曲线
-^^^^^^^^^^^^^^^^^^
 
-资产池假设中的 ``CPR/CDR`` 可以通过曲线的方式进行设置 
-
-.. code-block:: python
-   :emphasize-lines: 8
-   
-    mypool = {'清单':[
-              ["按揭贷款"
-               ,{"放款金额":1000,"放款利率":["固定",0.01],"初始期限":12
-                ,"频率":"每月","类型":"等额本息","放款日":"2021-02-01"}
-                ,{"当前余额":600 ,"当前利率":0.03,"剩余期限":8,"状态":"正常"}]],
-              '封包日':"2021-04-04"}
-    
-    myAssump = [{"CDR":[0.01,0.0]},{"CPR":[0.01,]}]
-    
-    p = localAPI.runPool(mypool,assumptions=myAssump)
-
-
-2.1.1假设调整项
-^^^^^^^^^^^^^^^
-
-用户可以对已经设置参数进行调整 
-
-例如 `CPR调整`
-
-  * 将会在 `2021-05-31`之后的 `CPR`上浮 50%
-  * 将会在 `2021-08-31`之后的 `CPR`上浮 100%
-  * 调整项将会于 `2022-01-31`停止，恢复到 原来的 `CPR=1%`
+2.2 租赁合同
+""""""""""""""""""
 
 .. code-block:: python
 
-    myAssumption = [{"CPR":0.01}
-                   ,{"CPR调整":[["2021-05-31",1.5],["2021-08-31",2.0],"2022-01-31"]}]
+  ("Pool",("Lease",<turnover gap>,<rental assump>,<end date>)
+                  ,None
+                  ,None
+                  )
 
-同样 `CDR调整项` 也能够对 `CDR` 进行调整
+输入
+  * ``间隔假设`` : 新模拟合同之间的间隔
 
-.. code-block:: python
+    * ``{"Days":30}`` 模拟合同之间间隔30天
+  * ``租金假设`` : 模拟合同的租金涨幅
 
-    myAssumption = [{"CDR":0.01}
-                   ,{"CDR调整":[["2021-05-31",1.5],["2021-08-31",2.0],"2022-01-31"]}]
+    * ``{"AnnualIncrease":0.05}`` -> 年化涨幅 5%
+    * ``{"CurveIncrease": [["2021-01-01",0.05],["2022-01-01",0.06]]}`` -> 按曲线涨幅
+  * ``结束日期`` : 模拟合同的结束日期
 
+    * ``"2020-01-01"``
 
+3. 运行假设
+------------
 
-2.2 利率假设
-^^^^^^^^^^^^^
+``运行假设``作为一个列表,需要传入参数 ``runAssump``
 
-利率假设将会用于未来债券和资产池的测算。 用户通过传入一个map:
+利率假设
+""""""""
 
-  * key 为 ``利率``
-  * value 为 ``[利率名称,[[起始日期,利率值]]]``
-
-``{"利率":["LPR5Y",["2022-01-01",0.05],["2022-08-01",0.18],["2023-08-01",0.1]]}``
-表示： 基准利率LPR5Y，2022-1-1时，利率为5%，2022-8-1,利率为18%, 2023-8-1,利率为10%。
-
-2.3 清仓回购假设
-^^^^^^^^^^^^^^^
-格式为 ``[[清仓触发条件],清仓计价方式,回款存入账户]``
-
-  * ``清仓触发条件``, 条件是列表格式， 当列表内所有触发条件都满足情况下，触发清仓回购动作。
+利率假设将会用于未来债券和资产池的测算。
 
 .. code-block:: python
 
-   {"清仓":[{"资产池余额剩余比率":0.2}]}
-   {"清仓":[{"指定日之后":"2024-01-01"}]}
+  r = localAPI.run(test01
+                  ,runAssump=[("interest"
+                              ,("LPR5Y",0.04)
+                              ,("LPR1Y",[["2021-01-01",0.025]
+                                        ,["2022-08-01",0.029]]))]
+                  ,read=True)
 
-2.4 循环资产假设
-^^^^^^^^^^^^^^^^^^
+表示： 基准利率LPR1Y，2022-1-1时，利率为2.5%，2022-8-1,利率为2.9%。
 
-.. code-block:: python
+清仓回购假设
+""""""""
 
-  {"RevolvingAssets":[["constant",[<可购买资产列表>]]
-                      ,[<资产池表现假设>]]}
-
-
-2.5 其他
-^^^^^^^^^^^^^
-
-* 查看中间变量
-
-通过传入 <公式> 和 <datePattern> 的组合,引擎会返回对应日期下公式的值
+当列表内所有触发条件都满足情况下，触发清仓回购动作。
 
 .. code-block:: python
 
-    myAssumption = [{"CPR":0.01}
-                   ,{"查看":
-                      [("月末",("债券余额",))]}]
+  ("call",{"poolBalance":200},{"bondBalance":100})
+
+  ("call",{"poolBalance":200} # clean up when pool balance below 200
+         ,{"bondBalance":100} # clean  up when bond balance below 100
+         ,{"poolFactor":0.03} # clean up when pool factor below 0.03
+         ,{"bondFactor":0.03} # clean up when bond factor below 0.03
+         ,{"afterDate":"2023-06-01"} # clean up after date 2023-6-1
+         ,{"or":[{"afterDate":"2023-06-01"} # clean up any of them met
+                 ,{"poolFactor":0.03}]}
+         ,{"and":[{"afterDate":"2023-06-01"} # clean up all of them met
+                 ,{"poolFactor":0.03}]}
+         ,{"and":[{"afterDate":"2023-06-01"} # nested !!
+                  ,{"or":
+                     [{"poolFactor":0.03}
+                     ,{"bondBalance":100}]}]})
 
 
-* 财务报表
+循环资产假设
+""""""""
 
-通过传入 <datePattern> ,获取基于日期序列下的 ``资产负债表`` 和 ``现金流量表``
+参数
+  * 循环资产列表
+  * 循环资产表现假设
+
 
 .. code-block:: python
 
-    myAssumption = [{"CPR":0.01}
-                   ,{"财务报表":"MonthEnd"}]
+  ("revolving"
+  ,["constant",revol_asset1,revol_asset2.....]
+  ,("Pool",("Mortgage",{"CDR":0.07},None,None,None)
+            ,None
+            ,None))
 
-* 提前停止测算
+查看中间变量
+""""""""""""""
+
+通过传入 ``<公式>`` 和 ``<datePattern>`` 的组合,引擎会返回对应日期下公式的值
+
+.. code-block:: python
+
+    ("inspect",("MonthEnd",("poolBalance",))
+              ,("QuarterFirst",("bondBalance",))
+              ,....)
+
+
+财务报表
+""""""""""""
+
+通过传入 ``<datePattern>`` ,获取基于日期序列下的 ``资产负债表`` 和 ``现金流量表``
+
+.. code-block:: python
+
+    ("report",{"dates":"MonthEnd"})
+
+提前停止测算
+""""""""""""""
 
 测算将会进行到 ``2023-9-1`` 为止。
 
 .. code-block:: python
 
-    myAssumption = [{"CPR":0.01}
-                   ,{"停止":"2023-09-01"}]
+    ("stop","2023-09-01")
 
 
+债券估值
+""""""""""""
 
-3. pricing assumption
-----------------------
+参数
 
-3.1 贴现曲线
-^^^^^^^^^^
-
-  * 贴现日:  引擎会把贴现日之后的债券现金（现金=本金+利息）流进行贴现
-  * 贴现曲线:  传入列表，列表格式为 [``日期``, ``贴现率``]
+  * 贴现日:贴现日之后的债券现金（现金=本金+利息）
+  * 贴现曲线:传入列表，列表格式为 [``日期``, ``贴现率``]
 
 .. code-block:: python
 
-  {"贴现日":"2023-06-22","贴现曲线":[["2020-01-01",0.03]]}
+  ("pricing"
+  ,{"date":"2021-08-22"
+   ,"curve":[["2021-01-01",0.025]
+            ,["2024-08-01",0.025]]})
+  
+  ("pricing"
+  ,{"贴现日":"2021-08-22"
+   ,"贴现曲线":[["2021-01-01",0.025]
+            ,["2024-08-01",0.025]]})
 
-3.2 贴现日
-^^^^^^^^^
+费用假设
+""""""""""""
 
-将贴现日之后的债券现金流，贴现至贴现日
+对于自定义费用，用户可以通过传入 ``runAssump`` 对未来的费用发生额进行估计。
+
+.. code-block:: python
+
+  # fee in the deal model
+  ,(("trusteeFee",{"type":{"fixFee":30}})
+
+      ,("tsFee",{"type":{"customFee":[["2024-01-01",100]
+                                    ,["2024-03-15",50]]}})
+      ,("tsFee1",{"type":{"customFee":[["2024-05-01",100]
+                                      ,["2024-07-15",50]]}})
+    )
+
+  # assumption to override
+  r = localAPI.run(test01
+              ,runAssump=[("estimateExpense",("tsFee"
+                                              ,[["2021-09-01",10]
+                                                ,["2021-11-01",20]])
+                                              ,("tsFee1"
+                                              ,[["2021-12-01",10]
+                                                ,["2022-01-01",20]])
+                          )]
+              ,read=True)
+
+
 
 4. read
 ---------
@@ -192,11 +237,11 @@
 .. code-block:: python
 
     result = localAPI.run(deal,
-             assumptions=....,
-             pricing=....,
-             read=True)
+                          poolAssump=....,
+                          runAssump=....,
+                          read=True)
 
-当调用完成后，运行结果会存入变量 ``result`` 中
+调用后，运算结果会存入变量 ``result`` 中
 
 资产池现金流
 ---------------
@@ -332,25 +377,22 @@
 用户通过设定多个情景，作为字典传入 `assumptions` 。提交运行后，引擎返回字典，key为场景名字，value为对应场景下的计算结果。
 
 .. code-block:: python
+  myAssumption = ("Pool",("Mortgage",{"CDR":0.01},None,None,None)
+                                ,None
+                                ,None)
 
-    myAssumption = [{"CPR":0.0}
-                    ,{"CDR":0.00}
-                    ,{"停止":"2025-01-01"}
-                    ,{"利率":["LPR5Y",["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]}
-                  ]
+  myAssumption2 = ("Pool",("Mortgage",None,{"CPR":0.01},None,None)
+                                  ,None
+                                  ,None)
 
-    myAssumption2 = [{"CPR":0.0}
-                    ,{"CDR":0.01}
-                    ,{"停止":"2025-01-01"}
-                    ,{"利率":["LPR5Y",["2020-01-01",0.05],["2022-08-01",0.05],["2023-08-01",0.06]]}
-                  ]
+  r = localAPI.run(test01
+              ,poolAssump={"00":myAssumption
+                          ,"stressed":myAssumption2}
+              ,read=True)
 
-    r = localAPI.run(test01 
-                ,assumptions={"00":myAssumption,"01":myAssumption2}
-                ,read=True)
 
-    # 获取场景 ‘00’ 的结果 
-    r["00"]
+  # 获取场景 ‘00’ 的结果 
+  r["00"]
 
 多情景的现金流对比 
 ----------------
@@ -368,7 +410,7 @@
   :width: 450
   :alt: fbs
 
-如果需要对比多个字段，可以在最后元素传入dataframe的列表
+如需对比多字段，可在最后元素传入dataframe的列表
 
 .. code-block:: python 
 
@@ -378,7 +420,7 @@
   :width: 450
   :alt: fbs2
 
-如果对应的查询数据是row index，那么查询：
+如果对应查询数据是row index，那么：
 
 .. code-block:: python 
 
@@ -400,23 +442,49 @@
 
 .. code-block:: python 
 
-    Asset01Assump = [{"CPR":0.1}
-                    ,{"回收":(0.5,1)}
-                    ,{"CDR":0.0}]
-    
-    Asset02Assump = [{"CPR":0.1}
-                    ,{"回收":(0.5,1)}
-                    ,{"CDR":0.01}]
-    
-    
-    myAssumption = ["明细",
-                    ,[([0],Asset01Assump),([1],Asset02Assump)]
-                    ,[{"利率":["LPR5Y",["2022-01-01",0.05]]}]]
-    
-    
-    r = localAPI.run(test01
-                 ,assumptions=myAssumption             
-                 ,read=True)
+  myAsset1 = ["Mortgage"
+              ,{"originBalance": 12000.0
+               ,"originRate": ["fix",0.045]
+               ,"originTerm": 120
+               ,"freq": "monthly"
+               ,"type": "level"
+               ,"originDate": "2021-02-01"}
+              ,{"currentBalance": 10000.0
+               ,"currentRate": 0.075
+               ,"remainTerm": 80
+               ,"status": "current"}]
+  myAsset2 = ["Mortgage"
+              ,{"originBalance": 12000.0
+               ,"originRate": ["fix",0.045]
+               ,"originTerm": 120
+               ,"freq": "monthly"
+               ,"type": "level"
+               ,"originDate": "2021-02-01"}
+              ,{"currentBalance": 10000.0
+               ,"currentRate": 0.075
+               ,"remainTerm": 80
+               ,"status": "current"}]
+  
+  myPool = {'assets':[myAsset1,myAsset2],
+            'cutoffDate':"2022-03-01"}
+  
+  Asset01Assump = (("Mortgage"
+                   ,{"CDR":0.01} ,{"CPR":0.1}, None, None)
+                   ,None
+                   ,None)
+  Asset02Assump = (("Mortgage"
+                   ,{"CDR":0.2} ,None, None, None)
+                   ,None
+                   ,None)
+  
+  AssetLevelAssumption = ("ByIndex"
+                          ,([0],Asset01Assump)
+                          ,([1],Asset02Assump))
+  
+  r = localAPI.runPool(myPool
+                     ,poolAssump=AssetLevelAssumption
+                     ,read=True)
+
     
 
 单独资产池现金流计算

@@ -2,17 +2,18 @@
 =======
 
 .. warning::
-  `absbox` 因为用到了python 的 ``match`` 语句,仅支持Python3.10
+  `absbox` 因为用到python 的 ``match`` 语句,仅支持Python3.10(以后)
 
 .. autosummary::
    :toctree: generated
 
 pip
 --------
-通过 ``pip`` 进行安装稳定版本。如果针对版本升级请使用  `` -U `` 参数.
+通过 ``pip`` 进行安装稳定版本。如果针对版本升级请使用  ``-U`` 参数.
 
 .. code-block:: console
 
+    ### 第一次安装
     pip install absbox
 
     ### 升级到最新版本
@@ -28,9 +29,9 @@ pip
 * 腾讯 -> https://mirrors.cloud.tencent.com/help/pypi.html
   
 
-github(测试版本)
+Github(测试版本)
 ------------------
-github版本会包括新功能以及更早的bug修复。本文档所有案例都经过Github版本的测试。
+Github版本会包括新功能以及更早的bug修复。本文档所有案例都经过Github版本的测试。
 
 .. code-block:: console
 
@@ -60,14 +61,14 @@ github版本会包括新功能以及更早的bug修复。本文档所有案例�
 
     pip show absbox 
 
-显示当前系统环境使用的 ``absbox`` 
+显示当前系统环境使用的 ``absbox`` 版本
 
 .. image:: img/package_version.png
   :width: 500
   :alt: 版本确认
 
 .. note ::
-  `absbox` 内部使用 `pandas`,`requests` 进行数据的处理和远程服务器调用。
+  ``absbox`` 内部使用 ``pandas``, ``requests`` 进行数据的处理和远程服务器调用。
 
 
 私有计算服务器 v.s 公共计算服务器
