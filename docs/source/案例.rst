@@ -5,6 +5,8 @@
 充电站投资值不值？Python算一把
 ------------------------------
 
+交易安排建模
+^^^^^^^^^^^^^^
 
 .. code-block:: python
 
@@ -16,13 +18,22 @@
                 ,{"start":"2023-11-01","originBalance":100_0000,"originTerm":120
                 ,"residual":10_0000,"period":"Monthly","amortize":"Straight"
                 ,"capacity":("Fixed",24*25*120*30)}
-                ,{"balance":100_0000,"remainTerm":120}]] 
+                ,{"balance":100_0000,"remainTerm":120}]]
 
     exps = (("租金",{"type":{"recurFee":["MonthFirst",18000]}})
             ,("人员工资",{"type":{"recurFee":["MonthFirst",25000]}})
             ,("保险",{"type":{"recurFee":["MonthFirst",4500]}}))
 
     waterfall_1 = {"amortizing":[
+                    ["payFee","acc01",['租金','人员工资','保险']]
+                ]
+                ,"cleanUp":[
+                    ["sellAsset",["Current|Defaulted",1.0,0],"acc01"]
+                    ,["payPrin","acc01",["EQ"]]
+                    ,["payIntResidual","acc01","EQ"]
+                ]}
+
+    waterfall_2 = {"amortizing":[
                     ["payFee","acc01",['租金','人员工资','保险']]
                     ,["accrueAndPayInt","acc01",["A"]]
                     ,["payPrin","acc01",["A"]]
@@ -33,7 +44,7 @@
                     ,["payIntResidual","acc01","EQ"]
                 ]}
 
-    waterfall_2 = {"amortizing":[
+    waterfall_3 = {"amortizing":[
                     ["payFee","acc01",['租金','人员工资','保险']]
                     ,["accrueAndPayInt","acc01",["A"]]
                     ,["payPrin","acc01",["A"]]
@@ -49,6 +60,32 @@
                     ,["payIntResidual","acc01","EQ"]
                 ]}
 
+    capStructure1 = (("EQ",{"balance":200_0000
+                        ,"rate":0.0
+                        ,"originBalance":200_0000
+                        ,"originRate":0.00
+                        ,"startDate":"2024-01-01"
+                        ,"rateType":{"Fixed":0.00}
+                        ,"bondType":{"Equity":None}}),
+                    )
+
+
+    capStructure2 = (("A",{"balance":100_0000
+                        ,"rate":0.06
+                        ,"originBalance":100_0000
+                        ,"originRate":0.00
+                        ,"startDate":"2024-01-01"
+                        ,"rateType":{"Fixed":0.06}
+                        ,"bondType":{"Sequential":None}})
+                    ,("EQ",{"balance":100_0000
+                        ,"rate":0.0
+                        ,"originBalance":100_0000
+                        ,"originRate":0.00
+                        ,"startDate":"2024-01-01"
+                        ,"rateType":{"Fixed":0.00}
+                        ,"bondType":{"Equity":None}}),
+                    )
+
 
     evStation = Generic(
         "TEST01"
@@ -56,21 +93,46 @@
         ,"payFreq":"MonthEnd","poolFreq":"MonthEnd","stated":"2050-01-01"}
         ,{'assets':assets}
         ,(("acc01",{"balance":0}),)
-        ,(("A",{"balance":100_0000
-            ,"rate":0.06
-            ,"originBalance":100_0000
-            ,"originRate":0.00
-            ,"startDate":"2024-01-01"
-            ,"rateType":{"Fixed":0.06}
-            ,"bondType":{"Sequential":None}})
-        ,("EQ",{"balance":100_0000
-            ,"rate":0.0
-            ,"originBalance":100_0000
-            ,"originRate":0.00
-            ,"startDate":"2024-01-01"
-            ,"rateType":{"Fixed":0.00}
-            ,"bondType":{"Equity":None}}),
+        ,capStructure1
+        ,exps
+        ,waterfall_1
+        ,[["CollectedCash","acc01"]]
+        ,None
+        ,None
+        ,None
+        ,None
+        ,("PreClosing","Amortizing")
         )
+
+    myAssump = ("Pool"
+                ,("Fixed",[["2024-01-01",0.05]
+                        ,["2025-01-01",0.08]
+                        ,["2026-01-01",0.1]]
+                        ,[["2024-01-01",0.3]
+                        ,["2025-01-01",0.35]
+                        ,["2026-01-01",0.4]])
+                ,None
+                ,None)
+
+    p = localAPI.run(evStation,poolAssump=myAssump
+                        ,runAssump=[("call",{"afterDate":"2034-07-01"})]
+                        ,read=True)
+    
+    from absbox.local.util import irr
+    irr(p['bonds']['EQ'],init=('2024-01-01',-200_0000))
+
+引入优先级
+^^^^^^^^^^
+
+.. code-block:: python
+
+    evStation = Generic(
+        "TEST01"
+        ,{"cutoff":"2024-01-01","closing":"2024-01-01","firstPay":"2024-02-01"
+        ,"payFreq":"MonthEnd","poolFreq":"MonthEnd","stated":"2050-01-01"}
+        ,{'assets':assets}
+        ,(("acc01",{"balance":0}),)
+        ,capStructure2
         ,exps
         ,waterfall_2
         ,[["CollectedCash","acc01"]]
@@ -95,9 +157,50 @@
                         ,runAssump=[("call",{"afterDate":"2034-07-01"})]
                         ,read=True)
 
+    irr(p['bonds']['EQ'],init=('2024-01-01',-100_0000))
 
-    from absbox.local.util import irr
-    irr(p['bonds']['EQ'],init=('2024-01-01',-200_0000))
+期间分配
+^^^^^^^^
+
+.. code-block:: python
+
+    evStation = Generic(
+        "TEST01"
+        ,{"cutoff":"2024-01-01","closing":"2024-01-01","firstPay":"2024-02-01"
+        ,"payFreq":"MonthEnd","poolFreq":"MonthEnd","stated":"2050-01-01"}
+        ,{'assets':assets}
+        ,(("acc01",{"balance":0}),)
+        ,capStructure2
+        ,exps
+        ,waterfall_3
+        ,[["CollectedCash","acc01"]]
+        ,None
+        ,None
+        ,None
+        ,None
+        ,("PreClosing","Amortizing")
+        )
+
+    myAssump = ("Pool"
+                ,("Fixed",[["2024-01-01",0.05]
+                        ,["2025-01-01",0.08]
+                        ,["2026-01-01",0.1]]
+                        ,[["2024-01-01",0.3]
+                        ,["2025-01-01",0.35]
+                        ,["2026-01-01",0.4]])
+                ,None
+                ,None)
+
+    p = localAPI.run(evStation,poolAssump=myAssump
+                        ,runAssump=[("call",{"afterDate":"2034-07-01"})]
+                        ,read=True)
+
+    irr(p['bonds']['EQ'],init=('2024-01-01',-100_0000))
+
+敏感性分析
+^^^^^^^^^^^^
+
+.. code-block:: python
 
     scenarioMap = {
         "base":("Pool"
@@ -107,8 +210,7 @@
                         ,[["2024-01-01",0.3]
                         ,["2025-01-01",0.35]
                         ,["2026-01-01",0.4]])
-                ,None
-                ,None)
+                ,None, None)
         ,"lowUtil" : ("Pool"
                 ,("Fixed",[["2024-01-01",0.05]
                         ,["2025-01-01",0.05]
@@ -116,22 +218,20 @@
                         ,[["2024-01-01",0.3]
                         ,["2025-01-01",0.35]
                         ,["2026-01-01",0.4]])
-                ,None
-                ,None)
-    ,"lowPrice" : ("Pool"
-            ,("Fixed",[["2024-01-01",0.05]
-                    ,["2025-01-01",0.05]
-                    ,["2026-01-01",0.8]]
-                    ,[["2024-01-01",0.25]
-                    ,["2025-01-01",0.30]
-                    ,["2026-01-01",0.35]])
-            ,None
-            ,None)
+                ,None, None)
+        ,"lowPrice" : ("Pool"
+                ,("Fixed",[["2024-01-01",0.05]
+                        ,["2025-01-01",0.05]
+                        ,["2026-01-01",0.8]]
+                        ,[["2024-01-01",0.25]
+                        ,["2025-01-01",0.30]
+                        ,["2026-01-01",0.35]])
+                ,None, None)
     }
     p = localAPI.run(evStation,poolAssump=scenarioMap
                         ,runAssump=[("call",{"afterDate":"2034-07-01"})]
                         ,read=True)
-
+    
     from absbox.local.util import irr
-    {k:irr(v['bonds']['EQ'],init=('2024-01-01',-100_0000)) 
+    {k:irr(v['bonds']['EQ'],init=('2024-01-01',-100_0000))
     for k,v in p.items()}
