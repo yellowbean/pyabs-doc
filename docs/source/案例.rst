@@ -5,7 +5,8 @@
 充电站投资值不值？Python算一把
 ------------------------------
 
-.. code-block::python
+
+.. code-block:: python
 
     from absbox import API
     localAPI = API("https://absbox.org/api/dev",lang='english',check=False)
