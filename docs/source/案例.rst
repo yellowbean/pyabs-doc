@@ -18,7 +18,7 @@
                 ,{"start":"2023-11-01","originBalance":100_0000,"originTerm":120
                 ,"residual":10_0000,"period":"Monthly","amortize":"Straight"
                 ,"capacity":("Fixed",24*25*120*30)}
-                ,{"balance":100_0000,"remainTerm":120}]]
+                ,{"remainTerm":120}]]
 
     exps = (("租金",{"type":{"recurFee":["MonthFirst",18000]}})
             ,("人员工资",{"type":{"recurFee":["MonthFirst",25000]}})
