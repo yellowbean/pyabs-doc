@@ -1,7 +1,7 @@
 from absbox.local.china import SPV
 
 test01 = SPV(
-    "一汽租赁有限公司 2023 年度第五期资产支持票据"
+    "一汽租赁有限公司 2023 年度第五期资产支持票据募集说明书"
     ,{"封包日":"2023-08-21"
       ,"起息日":"2023-11-21"
       ,"首次兑付日":"2023-12-26"
@@ -85,7 +85,7 @@ test01 = SPV(
              ,"originBalance":127800*10000
              ,"originRate":0.031
              ,"startDate":"2023-11-21"
-             ,"rateType":{"Fixed":0.031}
+             ,"rateType":{"Fixed":0.08}
              ,"bondType":{"Sequential":None}})
       ,("B",{"balance":13400*10000
              ,"rate":0.0
@@ -95,26 +95,31 @@ test01 = SPV(
              ,"rateType":{"期间收益":0.05}
              ,"bondType":{"Equity":None}
              }))
-    ,(("服务商费用",{"类型":{"年化费率":[("资产池余额",),0.0005]}})
-      ,("增值税",{"类型":{"差额费用":[("factor"
-                                   ,("资产池累计","利息"),0.0326)
-                                   ,("费用支付总额",None,"增值税")]}}))
+    ,(("服务商费用",{"类型":{"年化费率":[("资产池余额",),0.0005]}}),
+      #,("增值税",{"类型":{"差额费用":[("factor",("资产池累计","利息"),0.0326),("费用支付总额",None,"增值税")]}})
+     )
     ,{"amortizing":[
-         ["payFeeBySeq","收益账",['增值税','服务商费用'],{"support":["account"
+         ["payFeeBySeq","收益账",['服务商费用'],{"support":["account"
                                                                  ,"本金账"
                                                                  ,["accountDraw","abcd"]]}]
-         ,["accrueAndPayIntBySeq","收益账",["A1","B"],{"support":["account"
+         ,["accrueAndPayIntBySeq","收益账",["A1"],{"support":["account"
                                                                  ,"本金账"
                                                                  ,["accountDraw","abcd"]]}]
          ,["transfer","收益账","本金账",{"冲销":"abcd"}]
-         ,["支付收益","收益账","B"]
+         ,["accrueAndPayInt","收益账",["B"]]
          ,["transfer","收益账","本金账"]
          ,["payPrinBySeq","本金账",["A1","B"]]
          ,["payIntResidual","本金账","B"]
      ]
      ,"endOfCollection":[
-         ['bookBy',["ByFormula","abcd","Debit",("资产池当期","新增违约")]]
-     ]}
+         ['bookBy',["ByFormula","abcd","Debit",("资产池当期","新增违约")]]]
+     ,"cleanUp":[
+         ["sellAsset", ["Current|Defaulted", 1.0, 0.0], "本金账"]
+         ,["transfer","收益账","本金账"]
+         ,["accrueAndPayIntBySeq","本金账",["A1","B"]]
+         ,["payPrinBySeq","本金账",["A1","B"]]
+         ,["payIntResidual","本金账","B"]]
+     }
     ,[["利息回款","收益账"]
       ,["本金回款","本金账"]
       ,["早偿回款","本金账"]
