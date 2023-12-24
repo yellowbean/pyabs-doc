@@ -11,7 +11,7 @@
 .. code-block:: python
 
     from absbox import API
-    localAPI = API("https://absbox.org/api/dev",lang='english',check=False)
+    localAPI = API("https://absbox.org/api/latest",lang='english',check=False)
 
     from absbox import Generic
     assets = [["FixedAsset"
