@@ -13,7 +13,7 @@
     from absbox import API
     localAPI = API("https://absbox.org/api/dev",lang='english',check=False)
 
-    from absbox.local.generic import Generic
+    from absbox import Generic
     assets = [["FixedAsset"
                 ,{"start":"2023-11-01","originBalance":100_0000,"originTerm":120
                 ,"residual":10_0000,"period":"Monthly","amortize":"Straight"
@@ -118,7 +118,7 @@
                         ,runAssump=[("call",{"afterDate":"2034-07-01"})]
                         ,read=True)
     
-    from absbox.local.util import irr
+    from absbox.local.analytics import irr
     irr(p['bonds']['EQ'],init=('2024-01-01',-200_0000))
 
 引入优先级
@@ -232,6 +232,6 @@
                         ,runAssump=[("call",{"afterDate":"2034-07-01"})]
                         ,read=True)
     
-    from absbox.local.util import irr
+    from absbox.local.analytics import irr
     {k:irr(v['bonds']['EQ'],init=('2024-01-01',-100_0000))
     for k,v in p.items()}
