@@ -1,4 +1,4 @@
-from absbox.local.china import SPV
+from absbox import SPV
 
 test01 = SPV(
     "一汽租赁有限公司 2023 年度第五期资产支持票据募集说明书"

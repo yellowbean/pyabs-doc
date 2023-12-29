@@ -495,8 +495,7 @@
 .. code-block:: python 
 
 
-    from absbox.local.china import SPV
-    from absbox import API
+    from absbox import SPV,API
     localAPI = API("http://localhost:8081")
     
     

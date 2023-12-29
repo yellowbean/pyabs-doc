@@ -12,7 +12,7 @@ SPV
 
 .. code-block:: python
 
-  from absbox.local.china import SPV
+  from absbox import SPV
 
   class SPV:
       名称: str -> 任意字符串名称 
