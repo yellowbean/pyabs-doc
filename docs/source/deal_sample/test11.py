@@ -1,4 +1,4 @@
-from absbox.local.china import SPV
+from absbox import SPV
 
 test01 = SPV(
     "TEST11" 
@@ -42,6 +42,7 @@ test01 = SPV(
          ,["支付本金","账户01",["A1"]]
          ,["支付本金","账户01",["B"]]
          ,["支付收益","账户01","B"]
+         ,["支付收益","账户02","B"]
      ]}
     ,(["利息回款","账户01"]
       ,["本金回款","账户01"]

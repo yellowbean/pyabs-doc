@@ -1,4 +1,4 @@
-from absbox.local.china import SPV
+from absbox import SPV
 
 FY_AUTO_2023_2 = SPV(
     "福元2023年第二期个人汽车抵押贷款证券化信托"
