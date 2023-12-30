@@ -401,7 +401,7 @@
 
 .. code-block:: python 
 
-  from absbox.local.util import flow_by_scenario
+  from absbox import flow_by_scenario
 
   flow_by_scenario(rs,["pool","flow","利息"])
   flow_by_scenario(rs,["bonds","A1","本金"])
