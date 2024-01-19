@@ -3,7 +3,7 @@
 # -- Project information
 
 project = 'absbox'
-copyright = '2023, Xiaoyu Zhang'
+copyright = '2024, Xiaoyu Zhang'
 author = 'Xiaoyu Zhang'
 
 release = '0.8'
