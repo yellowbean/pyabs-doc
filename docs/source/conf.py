@@ -6,19 +6,26 @@ project = 'absbox'
 copyright = '2024, Xiaoyu Zhang'
 author = 'Xiaoyu Zhang'
 
-release = '0.8'
-version = '0.8.4'
+release = '0.26.0'
+version = '0.26.0'
 
 # -- General configuration
 
 extensions = [
-    'sphinx.ext.duration',
-    'sphinx.ext.doctest',
     'sphinx.ext.autodoc',
+    'sphinx.ext.duration',
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
-    'sphinx.ext.autosectionlabel'
+    'sphinx.ext.autosectionlabel',
+    'sphinxemoji.sphinxemoji',
+    'sphinx.ext.graphviz',
+    #'autoapi.extension'
+    #'nbsphinx'
+    'myst_nb'
 ]
+
+graphviz_output_format = 'svg'
+
 
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3/', None),
