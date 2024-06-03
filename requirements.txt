@@ -5,3 +5,7 @@ sphinxemoji
 notebook
 myst-nb
 absbox
+toolz
+lenses
+dateparser
+more_itertools
