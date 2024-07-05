@@ -46,7 +46,9 @@
 
 .. code-block:: python
 
-    rs = localAPI.listLibrary(deal_library=library_url,read=True)
+    rs = localAPI.listLibrary(deal_library=library_url
+                             ,read=True
+                             ,production=False)
     rs
 
 .. image:: img/list_library.png
@@ -70,7 +72,7 @@
     localAPI.queryLibrary(["22吉时代3A2_bc"]
                           ,deal_library=library_url
                           ,read=True  # 是否返回为dataframe
-                          ,prod=True  # 是否只包括正式模型 
+                          ,production=True  # 是否只包括正式模型 
                           ,history=False # 是否包括历史模型 
                           ,and_tags=[]  # 必须包含所有列举的标签
                           ,or_tags=[]   # 任意包含列举的标签
@@ -83,22 +85,25 @@
 
 * 产品ID : `22JSD03` 为 前序步骤 查询的产品ID
 * 模型库地址: 即 deal_library 
-* 假设: 同 :ref:`2. assumptions`
-* 定价假设: :ref:`3. pricing assumption`
+* runAssump: 产品假设
+* poolAssump: 资产池表现假设
 * reader: 如果中国产品选择 "china.SPV"
 
 .. code-block:: python
 
-    r = localAPI.runLibrary("22JSD03"
-                           ,deal_library=library_url
-                           ,pricing = {"贴现日":"2022-12-22","贴现曲线":[["2020-01-01",0.03]
-                                                                       ,["2030-01-01",0.03]]}
-                           ,assump = [{"CPR":0.01}  # 年化早偿付率 1%
-                                      ,{"CDR":0.01}  # 年化违约率  1%
-                                      ,{"回收":(0.7,18)}]
-                           ,reader="china.SPV"
-                           ,read=True
-                           ,production=True)
+    tt = localAPI.runLibrary("24FUYUAN01"
+                             ,deal_library=library_url
+                             ,runAssump = [("pricing", {"贴现日":"2024-07-02","贴现曲线":[["2020-01-01",0.03]
+                                                                        ,["2030-01-01",0.03]]})]
+                             ,poolAssump = ("Pool",
+                                             ("Mortgage",{"CDR":0.01},None,None,None)
+                                                        ,None
+                                                        ,None
+                                           )
+                             
+                             ,reader="china.SPV"
+                             ,read=True
+                             ,production=False))
 
 
 返回值和 API.run() 一致。
