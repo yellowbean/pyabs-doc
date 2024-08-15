@@ -11,5 +11,5 @@ dateparser
 more_itertools
 numpy
 pandas
-dateutil
+python-dateutil
 pyesg
