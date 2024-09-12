@@ -30,7 +30,6 @@
    安装
    建模
    分析
-   案例
    nbsample/notebook案例
    模型库(beta)
    支持
